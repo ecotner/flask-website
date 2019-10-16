@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css')}}">
+    <title>{% block title %}{% endblock %}</title>
+</head>
+
+<body>
+    <div id="navbar">
+        <ul>
+            <li id="navbar-title">Eric Cotner</li>
+            {% for k, v in g.nav_links.items() %}
+            <li><a href="{{ url_for(k) }}">{{v}}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+    <!-- <div id="top_stuff">
+        {% block header %}
+        {% endblock %}
+    </div> -->
+    <!-- <div id="content">{% block content %}{% endblock %}</div>
+    <div id="footer">
+        <footer>
+            {% block footer %}
+            {% endblock %}
+            <p class="footer">&copy; Copyright 2019 by Eric Cotner.</p>
+        </footer>
+    </div> -->
+</body>
+
+</html>

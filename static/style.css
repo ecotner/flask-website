@@ -1,0 +1,80 @@
+:root {
+    --main-bg-color: #1A1A22;
+    --main-text-color: white;
+    --nav-bg-color: #333333;
+    --nav-text-color: rgb(196, 196, 196);
+    --nav-pad-x: 30px;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--main-bg-color);
+}
+
+h1, h2, h3, p, li {
+    color: var(--main-text-color);
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+
+#navbar {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    background-color: var(--nav-bg-color);
+    position: fixed;
+}
+
+#navbar ul {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    list-style-type: none;
+    overflow: visible;
+}
+
+#navbar ul li {
+    height: 100%;
+    float: left;
+    text-align: center;
+}
+
+#navbar ul li a:link {
+    margin: 0;
+    height: 100%;
+    padding: 8px;
+    padding-left: var(--nav-pad-x);
+    padding-right: var(--nav-pad-x);
+    display: block;
+    text-decoration: none;
+    color: var(--nav-text-color);
+    background-color: var(--nav-bg-color);
+    font-size: 25pt;
+}
+
+#navbar ul li a:visited {
+    color: var(--nav-text-color);
+    font-size: large;
+}
+
+#navbar ul li a:hover, a:active {
+    color: var(--nav-text-color);
+    background-color: teal;
+}
+
+#navbar-title {
+    font-weight: bolder;
+    font-size: 35pt;
+    padding: 0;
+    padding-left: var(--nav-pad-x);
+    padding-right: var(--nav-pad-x);
+    margin: 0;
+    height: 100%;
+    text-decoration: none;
+    color: var(--nav-text-color);
+    background-color: var(--nav-bg-color);
+}
+
