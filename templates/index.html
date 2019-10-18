@@ -2,8 +2,18 @@
 
 {% block title %}Eric Cotner{% endblock %}
 
-{% block header %}
-    <h1>Eric Cotner</h1>
-    <h2>Data scientist and theoretical physicist</h2>
+{% block banner %}
+<div id="banner">
+    <div id="banner-img"><img src="/static/media/banner.jpg"></div>
+    <div id="banner-text">
+        <h1 class="banner-text">Eric Cotner</h1>
+        <h2 class="banner-text">Data scientist and theoretical physicist</h2>
+    </div>
+</div>
 {% endblock %}
 
+{% block content %}
+{% for _ in range(20) %}
+<p>Hello world!</p>
+{% endfor %}
+{% endblock %}

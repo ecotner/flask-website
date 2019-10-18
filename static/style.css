@@ -4,6 +4,7 @@
     --nav-bg-color: #333333;
     --nav-text-color: rgb(196, 196, 196);
     --nav-pad-x: 30px;
+    --nav-bar-title-font-size: 35pt;
 }
 
 body {
@@ -12,13 +13,26 @@ body {
     width: 100%;
     height: 100%;
     background-color: var(--main-bg-color);
+    /* position: fixed; */
 }
 
 h1, h2, h3, p, li {
     color: var(--main-text-color);
     font-family: Arial, Helvetica, sans-serif;
+    /* padding: 0; */
+    /* margin: 0; */
 }
 
+/* ============================== */
+/*             Navbar             */
+/* ============================== */
+
+#navbar-wrapper {
+    width: 100%;
+    position: relative;
+    overflow: auto;
+    clear: both;
+}
 
 #navbar {
     margin: 0;
@@ -26,6 +40,7 @@ h1, h2, h3, p, li {
     width: 100%;
     background-color: var(--nav-bg-color);
     position: fixed;
+    display: block;
 }
 
 #navbar ul {
@@ -76,5 +91,50 @@ h1, h2, h3, p, li {
     text-decoration: none;
     color: var(--nav-text-color);
     background-color: var(--nav-bg-color);
+}
+
+
+/* ============================== */
+/*            Content             */
+/* ============================== */
+
+#content-wrapper {
+    width: 100%;
+    position: static;
+    clear: both;
+    /* display: block; */
+    /* float: right; */
+}
+
+/* ============================== */
+/*             Banner             */
+/* ============================== */
+
+#banner {
+    position: relative;
+}
+
+#banner-img {
+    position: relative;
+    /* z-index: 0; */
+    /* display: block; */
+}
+
+#banner-img img {
+    width: 100%;
+    /* min-height: 500px; */
+}
+
+#banner-text {
+    position: absolute;
+    z-index: 10;
+    top: 0;
+    left: 0;
+    /* margin: 0;
+    padding: 0; */
+}
+
+.banner-text {
+    /* padding-left: 80px; */
 }
 
