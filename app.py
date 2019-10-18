@@ -6,13 +6,14 @@ A personal website. All works displayed here are subject to the Creative Commons
 'Attribution-NonCommercial-ShareAlike 4.0 International' license.
 """
 
-from flask import Flask, g, render_template, url_for
+from flask import Flask, g, render_template, url_for, redirect
 
 app = Flask(__name__)
 nav_links = {
     "index": "Home",
-    "datascience": "Data Science",
     "physics": "Physics",
+    "datascience": "Data Science",
+    "github": "GitHub",
     "bio": "Bio",
     "resume": "Resume",
 }
@@ -36,6 +37,11 @@ def datascience():
 @app.route("/physics")
 def physics():
     return render_template("index.html")
+
+
+@app.route("/github")
+def github():
+    return redirect(location=r"https://github.com/ecotner")
 
 
 @app.route("/bio")
