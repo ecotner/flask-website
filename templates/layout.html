@@ -16,15 +16,6 @@
                 {% endfor %}
             </ul>
         </div>
-        <!-- <div id="navbar" style="position: relative;">
-            <ul>
-                <li id="navbar-title">Eric Cotner</li>
-                {% for k, v in g.nav_links.items() %}
-                <li><a href="{{ url_for(k) }}">{{v}}</a></li>
-                {% endfor %}
-            </ul>
-        </div> -->
-        <!-- <div id="navbar-buffer"></div> -->
     </div>
     <div id="content-wrapper">
         {% block banner %}
@@ -34,7 +25,7 @@
             <footer>
                 {% block footer %}
                 {% endblock %}
-                <p class="footer">&copy; Copyright 2019 by Eric Cotner.</p>
+                <p id="copyright">&copy; Copyright 2019 by Eric Cotner.</p>
             </footer>
         </div>
     </div>
