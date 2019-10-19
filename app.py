@@ -13,6 +13,7 @@ nav_links = {
     "index": "Home",
     "physics": "Physics",
     "datascience": "Data Science",
+    "machinelearning": "Machine Learning",
     "github": "GitHub",
     "bio": "Bio",
     "resume": "Resume",
@@ -34,6 +35,11 @@ def datascience():
     return render_template("index.html")
 
 
+@app.route("/machinelearning")
+def machinelearning():
+    return render_template("index.html")
+
+
 @app.route("/physics")
 def physics():
     return render_template("index.html")
@@ -52,3 +58,7 @@ def bio():
 @app.route("/resume")
 def resume():
     return "Not yet!"
+
+
+if __name__ == "__main__":
+    app.run(debug=True)

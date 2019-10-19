@@ -1,2 +1,2 @@
 # flask-website
-Learning Flask by building my own website
+Learning Flask by building my own website from scratch. I intend to use this for professional/career purposes, but I might also add a blog at some point...

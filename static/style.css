@@ -1,17 +1,21 @@
 :root {
     --main-bg-color: #1A1A22;
     --main-text-color: white;
+    --link-unvisited-color: rgb(0, 0, 255);
+    --link-visited-color: rgb(195, 0, 255);
     --nav-bg-color: #333333;
     --nav-text-color: rgb(196, 196, 196);
     --nav-pad-x: 30px;
     --nav-bar-title-font-size: 35pt;
+    --nav-bar-link-font-size: 20pt;
+    --nav-bar-hover-pad-y: 8pt; /* should always be half the difference of the above quantities */
 }
 
 body {
     margin: 0;
     padding: 0;
     width: 100%;
-    /* height: 100%; */
+    /* min-height: 100%; */
     background-color: var(--main-bg-color);
     /* position: fixed; */
 }
@@ -23,9 +27,27 @@ h1, h2, h3, p, li {
     /* margin: 0; */
 }
 
+a:visited,
+a:hover {
+    color: var(--link-visited-color);
+}
+
 /* ============================== */
 /*             Navbar             */
 /* ============================== */
+
+#navbar-title {
+    font-weight: bolder;
+    font-size: var(--nav-bar-title-font-size);
+    padding: 0;
+    padding-left: var(--nav-pad-x);
+    padding-right: var(--nav-pad-x);
+    margin: 0;
+    height: 100%;
+    text-decoration: none;
+    color: var(--nav-text-color);
+    background-color: var(--nav-bg-color);
+}
 
 #navbar-wrapper {
     width: 100%;
@@ -45,6 +67,7 @@ h1, h2, h3, p, li {
     width: 100%;
     background-color: var(--nav-bg-color);
     position: static;
+    overflow: auto;
     /* display: block; */
 }
 
@@ -53,26 +76,30 @@ h1, h2, h3, p, li {
     padding: 0;
     height: 100%;
     list-style-type: none;
-    overflow: visible;
+    overflow: auto;
+    font-size: 0; /* this is to get rid of whitespace between nav elements */
 }
 
 #navbar ul li {
     height: 100%;
-    float: left;
+    /* float: left; */
+    display: inline-block;
+    vertical-align: middle;
     text-align: center;
 }
 
 #navbar ul li a:link {
     margin: 0;
     height: 100%;
-    padding: 8px;
     padding-left: var(--nav-pad-x);
     padding-right: var(--nav-pad-x);
+    padding-top: var(--nav-bar-hover-pad-y);
+    padding-bottom: var(--nav-bar-hover-pad-y);
     display: block;
     text-decoration: none;
     color: var(--nav-text-color);
     background-color: var(--nav-bg-color);
-    font-size: 25pt;
+    font-size: var(--nav-bar-link-font-size);
 }
 
 #navbar ul li a:visited {
@@ -80,22 +107,11 @@ h1, h2, h3, p, li {
     font-size: large;
 }
 
-#navbar ul li a:hover, a:active {
+#navbar ul li a:hover,
+#navbar ul li a:active {
     color: var(--nav-text-color);
     background-color: teal;
-}
-
-#navbar-title {
-    font-weight: bolder;
-    font-size: 35pt;
-    padding: 0;
-    padding-left: var(--nav-pad-x);
-    padding-right: var(--nav-pad-x);
-    margin: 0;
     height: 100%;
-    text-decoration: none;
-    color: var(--nav-text-color);
-    background-color: var(--nav-bg-color);
 }
 
 
@@ -140,24 +156,22 @@ h1, h2, h3, p, li {
 #banner-text {
     position: absolute;
     z-index: 10;
-    top: 5%;
-    left: 5%;
+    top: 10%;
+    left: 10%;
     /* margin: 0;
     padding: 0; */
 }
 
-.banner-text {
-    /* padding-left: 80px; */
+.banner-text h1 {
+    font-size: 60pt;
 }
 
 /* ============================== */
 /*             Footer             */
 /* ============================== */
 
-footer {
-
-}
-
-#copyright {
+.copyright,
+.flask-acknowledgement {
     text-align: center;
+    font-size: 10pt;
 }
