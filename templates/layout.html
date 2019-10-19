@@ -3,8 +3,8 @@
 
 <head>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css')}}">
-    <link rel="icon" , type="image/png" href="{{ url_for('static', filename='media/icon-atom.png')}}"> /*
-    https://www.cleanpng.com/png-atom-scalable-vector-graphics-text-editor-logo-6589277/download-png.html */
+    <!-- favicon can be found at https://www.cleanpng.com/png-atom-scalable-vector-graphics-text-editor-logo-6589277/download-png.html with "personal use" license -->
+    <link rel="icon" , type="image/png" href="{{ url_for('static', filename='media/icon-atom.png')}}">
     <title>{% block title %}{% endblock %}</title>
 </head>
 
@@ -28,9 +28,10 @@
                 {% block footer %}
                 {% endblock %}
                 <p class="copyright">&copy; Copyright 2019 by Eric Cotner.</p>
-                <p class="flask-acknowledgement">Website generated using <a
-                        href="http://flask.palletsprojects.com/en/1.1.x/">Flask</a> / [<a
-                        href="https://github.com/ecotner/flask-website">Source code</a>]</p>
+                <p class="flask-acknowledgement">
+                    Website generated using <a href="http://flask.palletsprojects.com/en/1.1.x/">Flask</a>
+                    / [<a href="https://github.com/ecotner/flask-website">Source code</a>]
+                </p>
             </footer>
         </div>
     </div>
