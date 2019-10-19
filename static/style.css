@@ -1,40 +1,92 @@
 :root {
     --main-bg-color: #1A1A22;
     --main-text-color: white;
-    --link-unvisited-color: rgb(0, 0, 255);
-    --link-visited-color: rgb(195, 0, 255);
-    --nav-bg-color: #333333;
-    --nav-text-color: rgb(196, 196, 196);
-    --nav-pad-x: 30px;
-    --nav-bar-title-font-size: 35pt;
-    --nav-bar-link-font-size: 20pt;
-    --nav-bar-hover-pad-y: 8pt; /* should always be half the difference of the above quantities */
+    --main-link-unvisited-color: rgb(0, 0, 255);
+    --main-link-visited-color: rgb(195, 0, 255);
 }
 
 body {
     margin: 0;
     padding: 0;
     width: 100%;
-    /* min-height: 100%; */
     background-color: var(--main-bg-color);
-    /* position: fixed; */
 }
 
 h1, h2, h3, p, li {
     color: var(--main-text-color);
     font-family: Arial, Helvetica, sans-serif;
-    /* padding: 0; */
-    /* margin: 0; */
+}
+
+a:link {
+    color: var(--main-link-unvisited-color)
 }
 
 a:visited,
-a:hover {
-    color: var(--link-visited-color);
+a:hover,
+a:active {
+    color: var(--main-link-visited-color);
 }
 
 /* ============================== */
 /*             Navbar             */
 /* ============================== */
+
+#navbar-wrapper {
+    width: 100%;
+    overflow: auto;
+    position: sticky;
+    position: -webkit-sticky;
+    top: 0;
+    z-index: 9001;
+    background-color: var(--nav-bg-color);
+    --nav-bar-hover-pad-y: 8pt; 
+    --nav-bg-color: #333333;
+    --nav-text-color: rgb(196, 196, 196);
+    --nav-text-color-anim-fade: rgb(114, 114, 114);
+    --nav-pad-x: 30px;
+    --nav-bar-title-font-size: 35pt;
+    --nav-bar-link-font-size: 20pt;
+    /* hover pad y should always be half the difference of the above quantities */
+    /* --nav-bar-hover-pad-y: calc((var(--nav-bar-title-font-size))) */
+}
+
+#navbar {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    background-color: var(--nav-bg-color);
+    position: static;
+    overflow: auto;
+}
+
+@keyframes rainbow-bg-animation-1 {
+      0%         {background-color: var(--nav-bg-color); color: var(--nav-text-color);}
+     14%      {background-color: rgb(255, 0, 0); color: var(--nav-text-color-anim-fade);}
+     28%     {background-color: rgb(255, 255, 0); color: black;}
+     42%     {background-color: rgb(0, 255, 0); color: black;}
+     57%     {background-color: rgb(0, 255, 255); color: black;}
+     71%     {background-color: rgb(88, 77, 255); color: black;}
+     85%     {background-color: rgb(255, 0, 255); color: black;}
+    100%      {background-color: rgb(255, 0, 0); color: black;}
+}
+
+@keyframes rainbow-bg-animation-2 {
+      0%     {background-color: rgb(255, 0, 0); color: black;}
+     16%     {background-color: rgb(255, 255, 0); color: black;}
+     33%     {background-color: rgb(0, 255, 0); color: black;}
+     50%     {background-color: rgb(0, 255, 255); color: black;}
+     67%     {background-color: rgb(88, 77, 255); color: black;}
+     83%     {background-color: rgb(255, 0, 255); color: black;}
+    100%     {background-color: rgb(255, 0, 0); color: black;}
+}
+
+#navbar-title:hover {
+    animation-name: rainbow-bg-animation-1, rainbow-bg-animation-2;
+    animation-duration: 4s, 4s;
+    animation-iteration-count: 1, infinite;
+    animation-timing-function: linear, linear;
+    animation-delay: 0s, 4s;
+}
 
 #navbar-title {
     font-weight: bolder;
@@ -49,28 +101,6 @@ a:hover {
     background-color: var(--nav-bg-color);
 }
 
-#navbar-wrapper {
-    width: 100%;
-    overflow: auto;
-    position: sticky;
-    position: -webkit-sticky;
-    top: 0;
-    z-index: 9001;
-    background-color: var(--nav-bg-color);
-    /* overflow: auto; */
-    /* clear: both; */
-}
-
-#navbar {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    background-color: var(--nav-bg-color);
-    position: static;
-    overflow: auto;
-    /* display: block; */
-}
-
 #navbar ul {
     margin: 0;
     padding: 0;
@@ -82,7 +112,6 @@ a:hover {
 
 #navbar ul li {
     height: 100%;
-    /* float: left; */
     display: inline-block;
     vertical-align: middle;
     text-align: center;
@@ -109,7 +138,7 @@ a:hover {
 
 #navbar ul li a:hover,
 #navbar ul li a:active {
-    color: var(--nav-text-color);
+    color: white;
     background-color: teal;
     height: 100%;
 }
@@ -122,9 +151,6 @@ a:hover {
 #content-wrapper {
     width: 100%;
     position: static;
-    /* clear: both; */
-    /* display: block; */
-    /* float: right; */
 }
 
 #content {
@@ -144,13 +170,10 @@ a:hover {
 
 #banner-img {
     position: static;
-    /* z-index: 0; */
-    /* display: block; */
 }
 
 #banner-img img {
     width: 100%;
-    /* min-height: 500px; */
 }
 
 #banner-text {
@@ -158,13 +181,10 @@ a:hover {
     z-index: 10;
     top: 10%;
     left: 10%;
-    /* margin: 0;
-    padding: 0; */
 }
 
-.banner-text h1 {
-    font-size: 60pt;
-}
+#banner-text h1 {font-size: 60pt;}
+#banner-text h2 {font-size: 45pt;}
 
 /* ============================== */
 /*             Footer             */
