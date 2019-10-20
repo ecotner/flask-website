@@ -8,13 +8,11 @@
             alt="Bullet Cluster x-ray map taken by Chandra telescope"></div>
     <div id="banner-text">
         <h1 class="banner-text">Eric Cotner</h1>
-        <h2 class="banner-text">Data scientist and astroparticle physicist</h2>
+        <h2 class="banner-text">Data scientist / physicist</h2>
     </div>
 </div>
 {% endblock %}
 
 {% block content %}
-{% for _ in range(20) %}
-<p>Hello world!</p>
-{% endfor %}
+{{ text|markdown }}
 {% endblock %}

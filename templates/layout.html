@@ -2,9 +2,13 @@
 <html>
 
 <head>
+    <!-- CSS stylesheet -->
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css')}}">
     <!-- favicon can be found at https://www.cleanpng.com/png-atom-scalable-vector-graphics-text-editor-logo-6589277/download-png.html with "personal use" license -->
     <link rel="icon" , type="image/png" href="{{ url_for('static', filename='media/icon-atom.png')}}">
+    <!-- MathJax support -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <title>{% block title %}{% endblock %}</title>
 </head>
 
@@ -20,8 +24,7 @@
         </div>
     </div>
     <div id="content-wrapper">
-        {% block banner %}
-        {% endblock %}
+        {% block banner %}{% endblock %}
         <div id="content">{% block content %}{% endblock %}</div>
         <div id="footer">
             <footer>

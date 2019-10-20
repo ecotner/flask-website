@@ -7,8 +7,11 @@ A personal website. All works displayed here are subject to the Creative Commons
 """
 
 from flask import Flask, g, render_template, url_for, redirect
+from flask_misaka import Misaka
 
 app = Flask(__name__)
+Misaka(app=app, math_explicit=True, math=True, highlight=True, fenced_code=False)
+
 nav_links = {
     "index": "Home",
     "physics": "Physics",
@@ -17,6 +20,7 @@ nav_links = {
     "github": "GitHub",
     "bio": "Bio",
     "resume": "Resume",
+    "blog": "Blog",
 }
 
 
@@ -27,22 +31,24 @@ def first():
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    with app.open_resource("markdown/index.md", mode="r") as fo:
+        text = fo.read()
+    return render_template("index.html", text=text)
 
 
 @app.route("/datascience")
 def datascience():
-    return render_template("index.html")
+    return index()
 
 
 @app.route("/machinelearning")
 def machinelearning():
-    return render_template("index.html")
+    return index()
 
 
 @app.route("/physics")
 def physics():
-    return render_template("index.html")
+    return index()
 
 
 @app.route("/github")
@@ -58,6 +64,11 @@ def bio():
 @app.route("/resume")
 def resume():
     return "Not yet!"
+
+
+@app.route("/blog")
+def blog():
+    return index()
 
 
 if __name__ == "__main__":
