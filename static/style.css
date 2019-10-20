@@ -1,14 +1,13 @@
 :root {
     --main-bg-color: #1A1A22;
     --main-text-color: white;
-    --main-link-unvisited-color: rgb(0, 0, 255);
-    --main-link-visited-color: rgb(195, 0, 255);
+    --main-link-unvisited-color: rgb(192, 192, 192);
+    --main-link-visited-color: rgb(192, 192, 192);
+    --main-link-hover-color: rgb(128, 128, 128);
 }
 
 body {
     margin: 0;
-    padding: 0;
-    width: 100%;
     background-color: var(--main-bg-color);
 }
 
@@ -17,57 +16,62 @@ h1, h2, h3, p, li {
     font-family: Arial, Helvetica, sans-serif;
 }
 
+/* Default font sizes */
+h1 {font-size: 30pt;}
+h2 {font-size: 20pt;}
+p, li {font-size: 15pt;}
+
 a:link {
     color: var(--main-link-unvisited-color)
 }
 
 a:visited,
-a:hover,
 a:active {
     color: var(--main-link-visited-color);
 }
+
+a:hover {
+    color: var(--main-link-hover-color)
+}
+
+code {
+    display: inline-block;
+    color: black;
+    background-color: gray;
+    padding: 2px;
+    font-size: 12pt;
+}
+
+pre code {padding: 10px}
 
 /* ============================== */
 /*             Navbar             */
 /* ============================== */
 
 #navbar-wrapper {
-    width: 100%;
-    overflow: auto;
     position: sticky;
-    position: -webkit-sticky;
     top: 0;
     z-index: 9001;
     background-color: var(--nav-bg-color);
-    --nav-bar-hover-pad-y: 8pt; 
     --nav-bg-color: #333333;
     --nav-text-color: rgb(196, 196, 196);
     --nav-text-color-anim-fade: rgb(114, 114, 114);
     --nav-pad-x: 30px;
-    --nav-bar-title-font-size: 35pt;
-    --nav-bar-link-font-size: 20pt;
+    --nav--title-font-size: 35pt;
+    --nav--link-font-size: 20pt;
     /* hover pad y should always be half the difference of the above quantities */
-    /* --nav-bar-hover-pad-y: calc((var(--nav-bar-title-font-size))) */
-}
-
-#navbar {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    background-color: var(--nav-bg-color);
-    position: static;
-    overflow: auto;
+    --nav--hover-pad-y: 8pt; 
 }
 
 @keyframes rainbow-bg-animation-1 {
-      0%         {background-color: var(--nav-bg-color); color: var(--nav-text-color);}
-     14%      {background-color: rgb(255, 0, 0); color: var(--nav-text-color-anim-fade);}
+      0%     {background-color: var(--nav-bg-color); color: var(--nav-text-color);}
+     14%     {background-color: rgb(255, 0, 0); color: var(--nav-text-color-anim-fade);}
      28%     {background-color: rgb(255, 255, 0); color: black;}
      42%     {background-color: rgb(0, 255, 0); color: black;}
      57%     {background-color: rgb(0, 255, 255); color: black;}
      71%     {background-color: rgb(88, 77, 255); color: black;}
      85%     {background-color: rgb(255, 0, 255); color: black;}
-    100%      {background-color: rgb(255, 0, 0); color: black;}
+    100%     {background-color: rgb(255, 0, 0); color: black;}
 }
 
 @keyframes rainbow-bg-animation-2 {
@@ -90,45 +94,37 @@ a:active {
 
 #navbar-title {
     font-weight: bolder;
-    font-size: var(--nav-bar-title-font-size);
-    padding: 0;
+    font-size: var(--nav--title-font-size);
     padding-left: var(--nav-pad-x);
     padding-right: var(--nav-pad-x);
-    margin: 0;
-    height: 100%;
-    text-decoration: none;
     color: var(--nav-text-color);
-    background-color: var(--nav-bg-color);
 }
 
 #navbar ul {
-    margin: 0;
     padding: 0;
-    height: 100%;
     list-style-type: none;
-    overflow: auto;
     font-size: 0; /* this is to get rid of whitespace between nav elements */
 }
 
 #navbar ul li {
-    height: 100%;
+    /* height: 100%; */
     display: inline-block;
     vertical-align: middle;
-    text-align: center;
+    /* text-align: center; */
 }
 
 #navbar ul li a:link {
-    margin: 0;
-    height: 100%;
+    /* margin: 0; */
+    /* height: 100%; */
     padding-left: var(--nav-pad-x);
     padding-right: var(--nav-pad-x);
-    padding-top: var(--nav-bar-hover-pad-y);
-    padding-bottom: var(--nav-bar-hover-pad-y);
+    padding-top: var(--nav--hover-pad-y);
+    padding-bottom: var(--nav--hover-pad-y);
     display: block;
     text-decoration: none;
-    color: var(--nav-text-color);
-    background-color: var(--nav-bg-color);
-    font-size: var(--nav-bar-link-font-size);
+    color: var(--nav-text-color);   /* prevents link from turning blue on load */
+    /* background-color: var(--nav-bg-color); */
+    font-size: var(--nav--link-font-size);
 }
 
 #navbar ul li a:visited {
@@ -140,7 +136,7 @@ a:active {
 #navbar ul li a:active {
     color: white;
     background-color: teal;
-    height: 100%;
+    /* height: 100%; */
 }
 
 
@@ -149,14 +145,15 @@ a:active {
 /* ============================== */
 
 #content-wrapper {
-    width: 100%;
+    /* width: 100%; */
     position: static;
 }
 
 #content {
     position: static;
-    margin-left: 5%;
-    margin-right: 5%;
+    margin-top: 100px;
+    margin-left: 15%;
+    margin-right: 15%;
 }
 
 /* ============================== */
@@ -179,16 +176,24 @@ a:active {
 #banner-text {
     position: absolute;
     z-index: 10;
-    top: 10%;
-    left: 10%;
+    bottom: 10%;
+    left: 5%;
 }
 
-#banner-text h1 {font-size: 60pt;}
-#banner-text h2 {font-size: 45pt;}
+#banner-text h1 {font-size: 5vw;}
+#banner-text h2 {font-size: 2.5vw;}
+.banner-text {
+    margin: 0;
+    text-shadow: 0 0 3px black;
+}
 
 /* ============================== */
 /*             Footer             */
 /* ============================== */
+
+footer {
+    margin-top: 100px;
+}
 
 .copyright,
 .flask-acknowledgement {
