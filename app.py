@@ -14,13 +14,13 @@ Misaka(app=app, math_explicit=True, math=True, highlight=True, fenced_code=False
 
 nav_links = {
     "index": "Home",
-    "physics": "Physics",
-    "datascience": "Data Science",
-    "machinelearning": "Machine Learning",
+    # "physics": "Physics",
+    # "datascience": "Data Science",
+    # "machinelearning": "Machine Learning",
     "github": "GitHub",
-    "bio": "Bio",
-    "resume": "Resume",
-    "blog": "Blog",
+    # "bio": "Bio",
+    # "resume": "Resume",
+    # "blog": "Blog",
 }
 
 
