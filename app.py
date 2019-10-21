@@ -16,9 +16,9 @@ Misaka(app=app, math_explicit=True, math=True, highlight=True, fenced_code=False
 nav_links = {
     "index": "Home",
     "physics": "Physics",
-    "datascience": "Data / AI",
+    # "datascience": "Data / AI",
     "github": "GitHub",
-    "blog": "Blog",
+    # "blog": "Blog",
     "about": "About / Contact",
 }
 
@@ -55,7 +55,11 @@ def github():
 
 @app.route("/about")
 def about():
-    return f"This is my about page, {url_for('about')}"
+    text = """
+    <h1>This page is under construction. In the meantime, you can contact me at 
+    2.71828cotner@gmail.com.</h1>
+    """
+    return text.replace(r"\n", "")
 
 
 @app.route("/blog")
