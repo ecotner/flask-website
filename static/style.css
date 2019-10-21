@@ -1,26 +1,29 @@
 :root {
-    --main-bg-color: #1A1A22;
+    --main-bg-color: rgb(38, 29, 43);
     --main-text-color: white;
     --main-link-unvisited-color: rgb(192, 192, 192);
     --main-link-visited-color: rgb(192, 192, 192);
     --main-link-hover-color: rgb(128, 128, 128);
 }
 
-body {
-    margin: 0;
-    background-color: var(--main-bg-color);
-}
-
+/* main font family and color */
 h1, h2, h3, p, li {
     color: var(--main-text-color);
     font-family: Arial, Helvetica, sans-serif;
 }
 
 /* Default font sizes */
-h1 {font-size: 30pt;}
-h2 {font-size: 20pt;}
+h1 {
+    font-size: 30pt;
+    margin-top: 50pt;
+}
+h2 {
+    font-size: 20pt;
+    margin-top: 30pt;
+}
 p, li {font-size: 15pt;}
 
+/* main anchor/link parameters */
 a:link {
     color: var(--main-link-unvisited-color)
 }
@@ -34,6 +37,7 @@ a:hover {
     color: var(--main-link-hover-color)
 }
 
+/* code display */
 code {
     display: inline-block;
     color: black;
@@ -43,6 +47,14 @@ code {
 }
 
 pre code {padding: 10px}
+
+/* main body */
+body {
+    margin: 0;
+    background-color: var(--main-bg-color);
+    min-height: 100vh;
+    position: relative;
+}
 
 /* ============================== */
 /*             Navbar             */
@@ -107,15 +119,11 @@ pre code {padding: 10px}
 }
 
 #navbar ul li {
-    /* height: 100%; */
     display: inline-block;
     vertical-align: middle;
-    /* text-align: center; */
 }
 
 #navbar ul li a:link {
-    /* margin: 0; */
-    /* height: 100%; */
     padding-left: var(--nav-pad-x);
     padding-right: var(--nav-pad-x);
     padding-top: var(--nav--hover-pad-y);
@@ -123,7 +131,6 @@ pre code {padding: 10px}
     display: block;
     text-decoration: none;
     color: var(--nav-text-color);   /* prevents link from turning blue on load */
-    /* background-color: var(--nav-bg-color); */
     font-size: var(--nav--link-font-size);
 }
 
@@ -147,6 +154,7 @@ pre code {padding: 10px}
 #content-wrapper {
     /* width: 100%; */
     position: static;
+    padding-bottom: 100px;
 }
 
 #content {
@@ -191,8 +199,10 @@ pre code {padding: 10px}
 /*             Footer             */
 /* ============================== */
 
-footer {
-    margin-top: 100px;
+#footer-wrapper {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
 }
 
 .copyright,
