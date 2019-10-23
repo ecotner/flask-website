@@ -1,5 +1,5 @@
 # Data scientist
-Currently working as a Data Scientist at [American Tire Distributors](https://www.atd-us.com/en), where I support supply chain operations. My work involves a wide array of data manipulation, visualization, machine learning, forecasting, clustering, statistics, decision science, and optimization. I get to work with an all-star group of data scientists, engineers, and architects at the [Advanced Analytics Center of Excellence](https://analytics.atd-us.org/aboutus).
+Currently working as a Data Scientist at [American Tire Distributors](https://www.atd-us.com/en), where I support supply chain operations. My work involves a wide array of data manipulation, visualization, machine learning, forecasting, clustering, statistics, decision science, and optimization. I get to work with an all-star group of data scientists, engineers, and architects at the [Advanced Analytics Center of Excellence](https://medium.com/@americantiredistributors/hello-world-meet-the-data-analytics-addicts-at-american-tire-distributors-16de0a7bceb8).
 
 <br><hr>
 

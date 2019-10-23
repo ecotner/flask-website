@@ -53,6 +53,7 @@ body {
     margin: 0;
     background-color: var(--main-bg-color);
     min-height: 100vh;
+    min-width: 100%;
     position: relative;
 }
 
@@ -160,8 +161,9 @@ body {
 #content {
     position: static;
     margin-top: 100px;
-    margin-left: 15%;
-    margin-right: 15%;
+    padding-left: 15%;
+    padding-right: 15%;
+    overflow: auto;
 }
 
 /* ============================== */
@@ -188,8 +190,10 @@ body {
     left: 5%;
 }
 
-#banner-text h1 {font-size: 5vw;}
-#banner-text h2 {font-size: 2.5vw;}
+/* #banner-text h1 {font-size: 5vw;}
+#banner-text h2 {font-size: 2.5vw;} */
+#banner-text h1 {font-size: calc(15pt + 5vw);}
+#banner-text h2 {font-size: calc(10pt + 2.5vw);}
 .banner-text {
     margin: 0;
     text-shadow: 0 0 3px black;
