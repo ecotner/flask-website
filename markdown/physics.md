@@ -24,6 +24,8 @@ Condensates typically form solitons that are similar in nature to water droplets
 $$\mathcal{L} = \frac{1}{2} \partial_\mu \phi^\dagger \partial^\mu \phi - V(\phi)$$
 where $V(\phi) = \tfrac{1}{2} m^2 |\phi|^2 - \lambda |\phi|^4 + (\gamma/m^2) |\phi|^6$ is an "attractive" potential, i.e. $\exists \phi_*$ such that $V(\phi_*) \lt \frac{1}{2} m^2 |\phi_*|^2$ meaning that $\phi$ finds it more energetically favorable to reside in the condensate state rather than exist as a free particle.
 
+## Primordial black holes
+
 # My contributions
 
 ## Papers
@@ -33,14 +35,22 @@ I have authored a variety of papers on the subject (most with the help of my bri
 I have been an invited speaker at several conferences to share my work with the physics community. In reverse chronological order:
 
 * [PACIFIC 2018](https://conferences.pa.ucla.edu/pacific-2018/) - Kiroro, Hokkaido, Japan
-* [PBH Focus Week](https://indico.ipmu.jp/indico/event/138/contributions/676/), Univ. of Tokyo IPMU, Chiba, Japan
+* [PBH Focus Week](https://indico.ipmu.jp/indico/event/138/), Univ. of Tokyo IPMU, Chiba, Japan
 * [PACIFIC 2016](https://conferences.pa.ucla.edu/pacific2016/) - Gump Station, Mo'orea, French Polynesia
 
 ## Code
-Due to the theoretical nature of my studies, a lot of my work is computational in nature. You can find the code for some of the simulations I've run in [this GitHub repo](https://github.com/ecotner/physics-research). Warning: it's messy (wrote most of it before I learned proper coding discipline). Below are some simulations of gravitationally-interacting condensates I have produced:
+Due to the theoretical nature of my studies, a lot of my work is computational in nature. You can find the code for some of the simulations I've run in [this GitHub repo](https://github.com/ecotner/physics-research). Warning: it's messy (wrote most of it before I learned proper coding discipline). Below are some simulations of gravitationally-interacting condensates I produced as part of a research project on the [scattering properties of boson stars](https://arxiv.org/abs/1608.00547):
 
 <center>
-<!-- <img src="https://i.imgur.com/k1XpnxO.gif" alt="2d boson stars orbiting each other" style="vertical-align: middle; margin-right: 5%;">
-<img src="https://i.imgur.com/OMC82pl.gif" alt="3d merger of attractive boson stars" style="vertical-align: middle;"> -->
-<blockquote class="imgur-embed-pub" lang="en" data-id="a/WLmAJjZ"><a href="//imgur.com/a/WLmAJjZ">View post on imgur.com</a></blockquote><script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script>
+<blockquote class="imgur-embed-pub" lang="en" data-id="a/WLmAJjZ"><a href="//imgur.com/a/WLmAJjZ"></a></blockquote><script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script>
 </center>
+
+## Teaching
+In theory, research funding is usually pretty tight (experimentalists get all the big bucks to make/maintain their experiments), so during my graduate degree, I taught undergraduate classes pretty much every quarter, including summers. Some people hate it and would rather just do research full time, but I found it to be an extremely rewarding experience. I taught both lecture and laboratory classes as a Teaching Assistant/Fellow for class sizes ranging from 10 to 150 students, with difficulty levels ranging from intoductory mechanics for biology and pre-med students to advanced nuclear/particle/cosmology classes for upper-division physics majors (electromagnetism was my "specialty" - I taught that one like 6 times at varying levels). I was awarded the Outstanding TA Award in 2014 for exceptional student reviews, but I have always had great reviews every quarter.
+
+My teaching style is kind of like storytelling - I never try to just handwave something if it can be helped, and after explaining a problem/concept, I'll take a step back and try and contextualize it in terms of the overall goal/idea so that there's a reason for every step. I especially enjoyed working out problems on the blackboard/whiteboard; I'd always try and make it as far as I could without having to reference my notes, which kept me sharp and on my toes, reinforced my fundamentals, and I'm sure it impressed the students too :3
+
+## Community outreach
+While studying and teaching can be time consuming, I have also found a bit of time to volunteer my time for community outreach. Every year from 2014 - 2017 I have been a volunteer for UCLA's [Exploring Your Universe](https://www.exploringyouruniverse.org/) program. EYU is a an "open house" event where the all the departments in the physical sciences open their doors to the public to stage scientific demonstrations and lectures all across campus. Every year, I trained a group of O(10) undergraduate students how to operate equipment and demonstrate it to the public.
+
+I also played a very minor role in the 2017 [APS Conference for Undergraduate Women in Physics](https://conferences.pa.ucla.edu/cuwip-ucla/index.html), where I advised interested undergraduates on what to expect from graduate school, and helped organize some of the social events.

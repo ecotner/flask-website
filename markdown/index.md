@@ -9,7 +9,7 @@ Recently graduated (Sept. 2018) from UCLA with a PhD in physics under the mentor
 <br><hr>
 
 # Teacher
-During my graduate studies I was given the opportunity to teach a wide variety of undergraduate physics classes, ranging from introductory physics 101 for freshman biology majors to upper-division nuclear and particle physics for advanced junior/senior physics majors. I have won multiple awards for my teaching, and the experience has given me a lot of experience in distilling down complex ideas to simple ones, and how to communicate them effectively.
+During my graduate studies I was given the opportunity to teach a wide variety of undergraduate physics classes, ranging from introductory physics 101 for freshman biology majors to upper-division nuclear and particle physics for advanced junior/senior physics majors. I have won multiple awards for my teaching, and the experience has given me a lot of practical knowledge in distilling down complex ideas to simple ones, and how to communicate them effectively.
 
 <br><hr>
 
