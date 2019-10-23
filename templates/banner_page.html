@@ -1,0 +1,15 @@
+{% extends "base_layout.html" %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block banner %}
+<div id="banner-img"><img src="/static/media/{{ banner_img }}" alt="{{ banner_desc }}"></div>
+<div id="banner-text">
+    <h1 class="banner-text">{{ banner_h1 }}</h1>
+    <h2 class="banner-text">{{ banner_h2 }}</h2>
+</div>
+{% endblock %}
+
+{% block content %}
+{{ text|markdown }}
+{% endblock %}

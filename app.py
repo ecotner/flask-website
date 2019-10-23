@@ -32,7 +32,15 @@ def first():
 def index():
     with app.open_resource("markdown/index.md", mode="r") as fo:
         text = fo.read()
-    return render_template("index.html", text=text)
+    return render_template(
+        template_name_or_list="banner_page.html",
+        title="Eric Cotner",
+        banner_img="banner-bullet-cluster.jpg",
+        banner_desc="Bullet Cluster x-ray map taken by Chandra telescope",
+        banner_h1="Eric Cotner",
+        banner_h2="Data scientist / physicist",
+        text=text,
+    )
 
 
 @app.route("/datascience")
@@ -44,7 +52,15 @@ def datascience():
 def physics():
     with app.open_resource("markdown/physics.md", mode="r") as fo:
         text = fo.read()
-    tmp = render_template("physics.html", text=text)
+    tmp = render_template(
+        template_name_or_list="banner_page.html",
+        title="Physics - Eric Cotner",
+        banner_img="particle_tracks.svg",
+        banner_desc="A collision event at the LHC",
+        banner_h1="Physics",
+        banner_h2="",
+        text=text,
+    )
     return flask.render_template_string(tmp)
 
 
