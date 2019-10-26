@@ -43,9 +43,9 @@ def index():
     )
 
 
-@app.route("/datascience")
-def datascience():
-    return index()
+# @app.route("/datascience")
+# def datascience():
+#     return index()
 
 
 @app.route("/physics")
@@ -71,16 +71,22 @@ def github():
 
 @app.route("/about")
 def about():
-    text = """
-    <h1>This page is under construction. In the meantime, you can contact me at 
-    2.71828cotner@gmail.com.</h1>
-    """
-    return text.replace(r"\n", "")
+    with app.open_resource("markdown/about.md", mode="r") as fo:
+        text = fo.read()
+    return render_template(
+        template_name_or_list="banner_page.html",
+        title="About Me - Eric Cotner",
+        banner_img="honduras_dive.jpg",
+        banner_desc="Scuba diving in Roatán, Honduras",
+        banner_h1="About me",
+        banner_h2="",
+        text=text,
+    )
 
 
-@app.route("/blog")
-def blog():
-    return index()
+# @app.route("/blog")
+# def blog():
+#     return index()
 
 
 # if __name__ == "__main__":
