@@ -7,7 +7,7 @@ A personal website. All works displayed here are subject to the Creative Commons
 """
 
 import flask
-from flask import Flask, g, render_template, url_for, redirect
+from flask import Flask, g, render_template, url_for, redirect, send_file
 from flask_misaka import Misaka
 
 app = Flask(__name__)
@@ -67,6 +67,11 @@ def physics():
 @app.route("/github")
 def github():
     return redirect(location=r"https://github.com/ecotner")
+
+
+@app.route("/resume")
+def resume():
+    return send_file("static/media/resume.pdf")
 
 
 @app.route("/about")

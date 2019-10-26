@@ -3,7 +3,7 @@
 ### Location: [Charlotte, North Carolina](https://www.google.com/maps/place/Charlotte,+NC/@35.2033533,-80.9799123,11z/data=!3m1!4b1!4m5!3m4!1s0x88541fc4fc381a81:0x884650e6bf43d164!8m2!3d35.2270869!4d-80.8431267)
 ### Social/messaging: [LinkedIn](https://www.linkedin.com/in/eric-cotner-4a919b25/), [Twitter](https://twitter.com/ericthewizard)
 
-# [Résumé](/static/media/resume.pdf)
+# [Résumé](/resume)
 
 
 # Short bio
