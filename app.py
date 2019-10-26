@@ -15,8 +15,8 @@ Misaka(app=app, math_explicit=True, math=True, highlight=True, fenced_code=False
 
 nav_links = {
     "index": "Home",
+    "datascience": "Data Science",
     "physics": "Physics",
-    # "datascience": "Data / AI",
     "github": "GitHub",
     # "blog": "Blog",
     "about": "About / Contact",
@@ -43,9 +43,20 @@ def index():
     )
 
 
-# @app.route("/datascience")
-# def datascience():
-#     return index()
+@app.route("/datascience")
+def datascience():
+    with app.open_resource("markdown/datascience.md", mode="r") as fo:
+        text = fo.read()
+    tmp = render_template(
+        template_name_or_list="banner_page.html",
+        title="Data Science - Eric Cotner",
+        banner_img="clustering_comparison.png",
+        banner_desc="A comparison of several unsupervised clustering techniques from `scikit-learn`",
+        banner_h1="Data Science",
+        banner_h2="and Machine Learning, AI, etc...",
+        text=text,
+    )
+    return flask.render_template_string(tmp)
 
 
 @app.route("/physics")
