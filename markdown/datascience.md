@@ -41,7 +41,7 @@ Reinforcement learning is a more general paradigm where a machine learns to comp
 * [Sutton & Barto exercises](https://github.com/ecotner/MachineLearningAlgorithms/tree/master/ReinforcementLearning/RLExercises)
     - While teaching myself the foundations of reinforcement learning, I studied from and completed exercises from [this excellent textbook](http://incompleteideas.net/book/the-book.html).
 * [Learning to play Pong](https://github.com/ecotner/MachineLearningAlgorithms/blob/master/ReinforcementLearning/Q-learning/Pong/README.md)
-    - Trained a reinforcement learning agent to play the game of Pong using the Q-learning algorithm, using nothing but the raw pixels from the game screen as input. After 6 days of training on a GPU the agent finally was able to outperform the built-in, pre-programmed opponent.
+    - Trained a reinforcement learning agent to play the game of Pong using the Q-learning algorithm, using nothing but the raw pixels from the game screen as input. After 6 days of training on a GPU the RL agent (green, right) finally was able to outperform the built-in, pre-programmed opponent (orange, left).
 
 <center><img src="static/media/pong_animation.gif" width="300px"></center>
 
