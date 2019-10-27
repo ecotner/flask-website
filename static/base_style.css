@@ -63,7 +63,7 @@ body {
 /*             Navbar             */
 /* ============================== */
 
-#navbar-wrapper {
+#navbar {
     position: sticky;
     top: 0;
     z-index: 9001;
@@ -75,7 +75,7 @@ body {
     --nav--title-font-size: 35pt;
     --nav--link-font-size: 20pt;
     /* hover pad y should always be half the difference of the above quantities */
-    --nav--hover-pad-y: 8pt; 
+    --nav--hover-pad-y: 7.5pt; 
 }
 
 @keyframes rainbow-bg-animation-1 {
@@ -166,41 +166,6 @@ body {
     padding-left: 15%;
     padding-right: 15%;
     overflow: auto;
-}
-
-/* ============================== */
-/*        Home page banner        */
-/* ============================== */
-
-#banner {
-    position: relative;
-    top: 0;
-}
-
-#banner-img {
-    position: static;
-}
-
-#banner-img img {
-    width: 100%;
-    display: block;
-}
-
-#banner-text {
-    position: absolute;
-    z-index: 10;
-    bottom: 10%;
-    left: 5%;
-}
-
-/* #banner-text h1 {font-size: 5vw;}
-#banner-text h2 {font-size: 2.5vw;} */
-#banner-text h1 {font-size: calc(15pt + 5vw);}
-#banner-text h2 {font-size: calc(10pt + 2.5vw);}
-.banner-text {
-    margin: 0;
-    color: white;
-    text-shadow: 0 0 3px black;
 }
 
 /* ============================== */

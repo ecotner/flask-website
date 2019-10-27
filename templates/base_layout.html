@@ -3,7 +3,8 @@
 
 <head>
     <!-- CSS stylesheet -->
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='base_style.css')}}">
+    {% block stylesheets %}{% endblock %}
     <!-- favicon can be found at https://www.cleanpng.com/png-atom-scalable-vector-graphics-text-editor-logo-6589277/download-png.html with "personal use" license -->
     <link rel="icon" , type="image/png" href="{{ url_for('static', filename='media/icon-atom.png')}}">
     <!-- MathJax support -->
@@ -13,19 +14,18 @@
 </head>
 
 <body>
-    <div id="navbar-wrapper">
-        <div id="navbar">
-            <ul>
-                <li id="navbar-title">Eric Cotner</li>
-                {% for k, v in g.nav_links.items() %}
-                <li><a href="{{ url_for(k) }}">{{v}}</a></li>
-                {% endfor %}
-            </ul>
-        </div>
+    <div id="navbar">
+        <ul>
+            <li id="navbar-title">Eric Cotner</li>
+            {% for k, v in g.nav_links.items() %}
+            <li><a href="{{ url_for(k) }}">{{v}}</a></li>
+            {% endfor %}
+        </ul>
     </div>
     <div id="content-wrapper">
-        <div id="banner">{% block banner %}{% endblock %}</div>
-        <div id="content">{% block content %}{% endblock %}</div>
+        {% block banner %}{% endblock %}
+        {% block sidebar %}{% endblock %}
+        {% block content %}{% endblock %}
     </div>
     <div id="footer-wrapper">
         {% block footer %}

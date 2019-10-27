@@ -18,7 +18,7 @@ nav_links = {
     "datascience": "Data Science",
     "physics": "Physics",
     "github": "GitHub",
-    # "blog": "Blog",
+    "blog": "Blog",
     "about": "About / Contact",
 }
 
@@ -33,7 +33,7 @@ def index():
     with app.open_resource("markdown/index.md", mode="r") as fo:
         text = fo.read()
     return render_template(
-        template_name_or_list="banner_page.html",
+        template_name_or_list="banner_layout.html",
         title="Eric Cotner",
         banner_img="banner-bullet-cluster.jpg",
         banner_desc="Bullet Cluster x-ray map taken by Chandra telescope",
@@ -48,7 +48,7 @@ def datascience():
     with app.open_resource("markdown/datascience.md", mode="r") as fo:
         text = fo.read()
     tmp = render_template(
-        template_name_or_list="banner_page.html",
+        template_name_or_list="banner_layout.html",
         title="Data Science - Eric Cotner",
         banner_img="clustering_comparison.png",
         banner_desc="A comparison of several unsupervised clustering techniques from `scikit-learn`",
@@ -64,7 +64,7 @@ def physics():
     with app.open_resource("markdown/physics.md", mode="r") as fo:
         text = fo.read()
     tmp = render_template(
-        template_name_or_list="banner_page.html",
+        template_name_or_list="banner_layout.html",
         title="Physics - Eric Cotner",
         banner_img="particle_tracks.svg",
         banner_desc="A collision event at the LHC",
@@ -90,7 +90,7 @@ def about():
     with app.open_resource("markdown/about.md", mode="r") as fo:
         text = fo.read()
     return render_template(
-        template_name_or_list="banner_page.html",
+        template_name_or_list="banner_layout.html",
         title="About Me - Eric Cotner",
         banner_img="honduras_dive.jpg",
         banner_desc="Scuba diving in Roatán, Honduras",
@@ -100,9 +100,11 @@ def about():
     )
 
 
-# @app.route("/blog")
-# def blog():
-#     return index()
+@app.route("/blog")
+def blog():
+    return render_template(
+        template_name_or_list="blog_layout.html", title="Blog - Eric Cotner"
+    )
 
 
 # if __name__ == "__main__":
