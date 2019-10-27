@@ -14,4 +14,4 @@ During my graduate studies I was given the opportunity to teach a wide variety o
 <br><hr>
 
 # Diver
-I have been an active scuba diver since April 2018, and since then have obtained both my _Open Water_ and _Advanced Open Water_ certifications. I have had the fortune to explore many interesting dive sites in locations such as Los Angeles, Mexico, North Carolina, Australia, and Honduras, and hope to visit many more.
+I have been an active scuba diver since April 2018, and since then have obtained both my *Open Water* and *Advanced Open Water* certifications. I have had the fortune to explore many interesting dive sites in locations such as Los Angeles, Mexico, North Carolina, Australia, and Honduras, and hope to visit many more.

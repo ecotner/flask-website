@@ -9,7 +9,8 @@
 /* main font family and color */
 h1, h2, h3, p, li {
     color: var(--main-text-color);
-    font-family: Arial, Helvetica, sans-serif;
+    /* font-family: Arial, Helvetica, sans-serif; */
+    font-family: "Open Sans", Calibri, sans-serif;
 }
 
 /* Default font sizes */
@@ -43,6 +44,7 @@ code {
     color: black;
     background-color: gray;
     padding: 2px;
+    font-family: Courier, 'Courier New', monospace;
     font-size: 12pt;
 }
 
@@ -197,6 +199,7 @@ body {
 #banner-text h2 {font-size: calc(10pt + 2.5vw);}
 .banner-text {
     margin: 0;
+    color: white;
     text-shadow: 0 0 3px black;
 }
 
