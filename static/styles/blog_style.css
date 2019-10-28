@@ -1,0 +1,41 @@
+:root {
+    --sidebar-width: 17%;
+}
+
+#content-wrapper {
+    display: flex;
+    flex-direction: row;
+    /* padding-bottom: 100px; */
+}
+
+#sidebar {
+    background-color: red;
+    width: var(--sidebar-width);
+    display: flex;
+    justify-content: center;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+#sidebar ul {
+    padding: 0;
+}
+
+#sidebar ul li {
+    padding: 4px;
+    list-style-type: none;
+}
+
+#sidebar ul li:hover {
+    background-color: teal;
+}
+
+#content {
+    background-color: blue;
+    width: calc(100% - var(--sidebar-width));
+    /* height: 100vh; */
+    padding-left: 5%;
+    padding-right: 5%;
+    box-sizing: border-box;
+    overflow-y: scroll;
+}
