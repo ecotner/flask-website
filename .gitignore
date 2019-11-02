@@ -3,3 +3,5 @@
 __pycache__
 flaskenv.sh
 config.json
+*test*
+*TEST*
