@@ -24,20 +24,33 @@
         </ul>
     </div>
     <div id="content-wrapper">
-        {% block banner %}{% endblock %}
         {% block sidebar %}{% endblock %}
-        {% block content %}{% endblock %}
-        {% block footer %}
-        <div id="footer-wrapper">
-            <p class="copyright">&copy; Copyright 2019 by Eric Cotner.</p>
-            <p class="flask-acknowledgement">
-                Website generated using <a href="http://flask.palletsprojects.com/en/1.1.x/">Flask</a>
-                / [<a href="https://github.com/ecotner/flask-website">Source code</a>]
-            </p>
+        <div id="main-content">
+            {% block banner %}{% endblock %}
+            {% block content_text %}{% endblock %}
+            <div id="footer">
+                <p class="copyright">&copy; Copyright 2019 by Eric Cotner.</p>
+                <p class="flask-acknowledgement">
+                    Website generated using <a href="http://flask.palletsprojects.com/en/1.1.x/">Flask</a>
+                    / [<a href="https://github.com/ecotner/flask-website">Source code</a>]
+                </p>
+            </div>
         </div>
-        {% endblock %}
     </div>
-    {% block end_scripts %}{% endblock %}
+    <script>
+        // Make content-wrapper fill the rest of the screen
+        // height that wasn't filled by the navbar
+    function resizeContentWrapper() {
+        var h = document.getElementById("navbar").offsetHeight;
+        var el = document.getElementById("content-wrapper");
+        el.style.height = `calc(100vh - ${h}px)`;
+    }
+    // Run it once, then set to occur every time window is resized
+    resizeContentWrapper()
+    window.onresize = resizeContentWrapper
+    </script>
+    {% block end_scripts %}
+    {% endblock %}
 </body>
 
 </html>
