@@ -1,6 +1,3 @@
-import json
-import os
-
 import pandas as pd
 import sshtunnel
 import MySQLdb as sql
@@ -8,8 +5,9 @@ import MySQLdb as sql
 sshtunnel.SSH_TIMEOUT = 5.0
 sshtunnel.TUNNEL_TIMEOUT = 5.0
 
-with open("SECRETS.json", "r") as fp:
-    config = json.load(fp)
+from application.database.db_config import DBConfig
+
+config = DBConfig()
 
 
 class FakeTunnel:
@@ -51,7 +49,7 @@ def open_mysql_connection(database="BLOG", tunnel=None):
 
 
 def mysql_to_df(query, database="BLOG"):
-    if config["FLASK_ENV"] == "development":
+    if config["USE_SSH"]:
         tunnel = open_ssh_tunnel()
     else:
         tunnel = FakeTunnel()
