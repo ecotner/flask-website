@@ -1,0 +1,22 @@
+{% extends "base_layout.html" %}
+{% block stylesheets %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/sidebar_style.css')}}">
+{% endblock %}
+{% block title %}{{ title }}{% endblock %}
+
+{% block head_scripts %}
+{% endblock %}
+
+{% block sidebar %}
+<div id="sidebar">
+    <ul>
+        <li><h1 id="sidebar-title">{{ sidebar_title or "Some title" }}</h1></li>
+    </ul>
+</div>
+{% endblock %}
+
+{% block content_text %}
+<div id="content-text">
+    {{ text|markdown }}
+</div>
+{% endblock %}

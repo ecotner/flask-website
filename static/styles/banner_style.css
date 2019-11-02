@@ -1,3 +1,14 @@
+/* Default font sizes */
+h1 {
+    font-size: 30pt;
+    margin-top: 50pt;
+}
+h2 {
+    font-size: 20pt;
+    margin-top: 30pt;
+}
+p, li {font-size: 15pt;}
+
 /* ============================== */
 /*        Home page banner        */
 /* ============================== */
@@ -36,17 +47,8 @@
 /*            Content             */
 /* ============================== */
 
-#content-wrapper {
-    /* width: 100%; */
+#content-text {
     position: static;
-    box-sizing: content-box;
-}
-
-#content {
-    position: static;
-    /* margin-top: 100px; */
     padding-left: 15%;
     padding-right: 15%;
-    padding-bottom: 100px;
-    overflow: auto;
 }

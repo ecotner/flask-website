@@ -1,0 +1,42 @@
+:root {
+    --sidebar-width: 17%;
+    --sidebar-bg-color: rgb(90, 28, 77);
+}
+
+#sidebar {
+    background-color: var(--sidebar-bg-color);
+    width: var(--sidebar-width);
+    display: flex;
+    justify-content: center;
+    overflow-y: scroll;
+}
+
+#sidebar ul {
+    padding: 0;
+}
+
+#sidebar ul li {
+    padding: 4px;
+    list-style-type: none;
+}
+
+#sidebar ul li:hover {
+    background-color: teal;
+}
+
+#content-wrapper {
+    display: flex;
+    flex-direction: row;
+}
+
+#main-content {
+    background-color: var(--main-bg-color);
+    width: calc(100% - var(--sidebar-width));
+    overflow-y: auto;
+}
+
+#content-text {
+    position: static;
+    margin-left: 5%;
+    margin-right: 10%;
+}

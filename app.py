@@ -6,9 +6,14 @@ A personal website. All works displayed here are subject to the Creative Commons
 'Attribution-NonCommercial-ShareAlike 4.0 International' license.
 """
 
+import json
+
 import flask
 from flask import Flask, g, render_template, url_for, redirect, send_file
 from flask_misaka import Misaka
+import pandas as pd
+
+from source.mysql import mysql_to_df
 
 app = Flask(__name__)
 Misaka(app=app, math_explicit=True, math=True, highlight=True, fenced_code=False)
@@ -102,8 +107,28 @@ def about():
 
 @app.route("/blog")
 def blog():
+    query = """
+        SELECT
+            title
+            ,text
+        FROM posts
+        """
+    df = mysql_to_df(query)
+    text = df["text"].iloc[0]
+    title = df["title"].iloc[0]
+
     return render_template(
-        template_name_or_list="blog_layout.html", title="Blog - Eric Cotner"
+        template_name_or_list="sidebar_layout.html",
+        title=f"{title} - Eric Cotner",
+        sidebar_title="some title",
+        text=text,
+    )
+
+
+@app.route("/admin")
+def admin():
+    return render_template(
+        template_name_or_list="sidebar_layout.html", title="Admin portal"
     )
 
 
