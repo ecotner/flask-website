@@ -1,0 +1,25 @@
+img[alt=blog-img] {
+    max-height: 250px;
+    display: block;
+    margin: 0 auto;
+}
+
+.tag {
+    display: block;
+    padding: 0;
+    margin: 0;
+}
+
+.tag li {
+    display: none;
+    list-style-type: square;
+    margin-left: 20px;
+}
+
+.post-hx, .tag-hx {
+    margin: 0;
+}
+
+.collapse-indicator {
+    font-family: 'Courier New', Courier, monospace;
+}

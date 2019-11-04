@@ -2,21 +2,14 @@
 {% block stylesheets %}
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/sidebar_style.css')}}">
 {% endblock %}
-{% block title %}{{ title }}{% endblock %}
-
-{% block head_scripts %}
-{% endblock %}
+{% block title %}{{ page_title }}{% endblock %}
 
 {% block sidebar %}
 <div id="sidebar">
     <ul>
-        <li><h1 id="sidebar-title">{{ sidebar_title or "Some title" }}</h1></li>
+        <li><h1 id="sidebar-title">{% block sidebar_title %}{% endblock %}</h1></li>
+        {% block sidebar_content %}{% endblock %}
     </ul>
 </div>
 {% endblock %}
 
-{% block content_text %}
-<div id="content-text">
-    {{ text|markdown }}
-</div>
-{% endblock %}

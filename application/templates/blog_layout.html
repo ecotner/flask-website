@@ -1,0 +1,43 @@
+{% extends "sidebar_layout.html" %}
+<!-- Head -->
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/sidebar_style.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/blog_style.css')}}">
+{% endblock %}
+{% block head_scripts %}
+    <script src="{{ url_for('static', filename='js/blog.js') }}"></script>
+    <!-- <script>alert('derp')</script> -->
+{% endblock %}
+
+<!-- Sidebar -->
+{% block sidebar_title %}Posts{% endblock %}
+{% block sidebar_content %}
+    {% for tag, posts in tag_to_posts.items() %}
+        <li class="tag">
+            <a onclick="toggleListExpand(this)" style="display: block;">
+                <h3 class="tag-hx" style="color: {{ posts['color'] }};">
+                    {{ tag }} ({{ posts['count'] }})
+                    <span class="collapse-indicator">[+]</span>
+                </h3>
+            </a>
+            <ul>
+            {% for title, link in zip(posts['title'], posts['link']) %}
+                <li>
+                    <h4 class="post-hx">
+                        <a href="{{ url_for('blog_post', link=link) }}">{{ title }}</a>
+                    </h4>
+                </li>
+            {% endfor %}
+            </ul>
+        </li>
+    {% endfor %}
+{% endblock %}
+
+<!-- Main content -->
+{% block content_text %}
+    <div id="content-text">
+        <h5>Posted {{ posted_date }}</h5>
+        <h5>Tags: {{ post_tags|safe }}</h5>
+        {{ content_text|markdown }}
+    </div>
+{% endblock %}

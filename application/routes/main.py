@@ -20,12 +20,13 @@ from application import app
 
 Misaka(app=app, math_explicit=True, math=True, highlight=True, fenced_code=False)
 
+
 nav_links = {
     "index": "Home",
     "datascience": "Data Science",
     "physics": "Physics",
     "github": "GitHub",
-    "blog": "Blog",
+    "blog_landing": "Blog",
     "about": "About / Contact",
 }
 
@@ -41,7 +42,7 @@ def index():
         text = fo.read()
     return render_template(
         template_name_or_list="banner_layout.html",
-        title="Eric Cotner",
+        page_title="Eric Cotner",
         banner_img="banner-bullet-cluster.jpg",
         banner_desc="Bullet Cluster x-ray map taken by Chandra telescope",
         banner_h1="Eric Cotner",
@@ -56,7 +57,7 @@ def datascience():
         text = fo.read()
     tmp = render_template(
         template_name_or_list="banner_layout.html",
-        title="Data Science - Eric Cotner",
+        page_title="Data Science - Eric Cotner",
         banner_img="clustering_comparison.png",
         banner_desc="A comparison of several unsupervised clustering techniques from `scikit-learn`",
         banner_h1="Data Science",
@@ -72,7 +73,7 @@ def physics():
         text = fo.read()
     tmp = render_template(
         template_name_or_list="banner_layout.html",
-        title="Physics - Eric Cotner",
+        page_title="Physics - Eric Cotner",
         banner_img="particle_tracks.svg",
         banner_desc="A collision event at the LHC",
         banner_h1="Physics",
@@ -98,7 +99,7 @@ def about():
         text = fo.read()
     return render_template(
         template_name_or_list="banner_layout.html",
-        title="About Me - Eric Cotner",
+        page_title="About Me - Eric Cotner",
         banner_img="honduras_dive.jpg",
         banner_desc="Scuba diving in Roatán, Honduras",
         banner_h1="About me",

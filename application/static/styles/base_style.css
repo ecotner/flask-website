@@ -11,7 +11,7 @@
 }
 
 /* main font family and color */
-h1, h2, h3, p, li {
+h1, h2, h3, h4, h5, h6, p, li {
     color: var(--main-text-color);
     /* font-family: Arial, Helvetica, sans-serif; */
     font-family: "Open Sans", Calibri, sans-serif;
