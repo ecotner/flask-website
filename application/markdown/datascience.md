@@ -18,7 +18,7 @@ Supervised learning describes algorithms that learn tasks by example. You show a
 * [Pixel-wise classification of microscopy images](https://github.com/ecotner/Kaggle/tree/master/NucleusSegmentation)
     - Part of the 2017 Kaggle Data Science Bowl. The goal was to perform image segmentation by overlaying a mask on top of cellular nuclei to help researchers interpret the images in order to speed up biomedical research. I used a special type of convolutional neural network called a "U-Net" which is able to make accurate predictions at the pixel level.
 
-<center><img src="static/media/nucleus_segmentation.png" width="500px"></center>
+<center><img src="{{ url_for('static', filename='media/nucleus_segmentation.png') }}" width="500px"></center>
     
 * [Handwritten digit classification](https://github.com/ecotner/Kaggle/tree/master/DigitRecognizer)
     - Used a Residual Network (ResNet) to classify handwritten digits from the MNIST database.
@@ -43,7 +43,7 @@ Reinforcement learning is a more general paradigm where a machine learns to comp
 * [Learning to play Pong](https://github.com/ecotner/MachineLearningAlgorithms/blob/master/ReinforcementLearning/Q-learning/Pong/README.md)
     - Trained a reinforcement learning agent to play the game of Pong using a Deep Q-Network (it honestly wasn't that deep), using nothing but the raw pixels from the game screen as input. After 6 days of training on a GPU (2500 simulated games, 3.5 million frames), the RL agent (green, right) finally was able to outperform the built-in, pre-programmed opponent (orange, left).
 
-<center><img src="static/media/pong_animation.gif" width="300px"></center>
+<center><img src="{{ url_for('static', filename='media/pong_animation.gif') }}" width="300px"></center>
 
 ## Other
 I've done some other minor machine learning work, like playing around with various neural network architectures, writing my own optimization algorithms, etc. These are all either works in progress, things that didn't work but were still interesting, and other miscellaneous things.

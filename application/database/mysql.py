@@ -5,7 +5,7 @@ import MySQLdb as sql
 sshtunnel.SSH_TIMEOUT = 5.0
 sshtunnel.TUNNEL_TIMEOUT = 5.0
 
-from application.database.db_config import DBConfig
+from application.db_config import DBConfig
 
 config = DBConfig()
 

@@ -34,12 +34,13 @@ a:hover {
 
 /* code display */
 code {
-    display: inline-block;
+    display: inline;
     color: black;
+    font-weight: bold;
     background-color: gray;
-    padding: 2px;
+    padding: 0 2px 0 2px;
     font-family: Courier, 'Courier New', monospace;
-    font-size: 12pt;
+    /* font-size: 12pt; */
 }
 
 pre code {padding: 10px}

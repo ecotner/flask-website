@@ -1,0 +1,35 @@
+{% extends "blog_layout.html" %}
+{% block title %}{{ title }}{% endblock %}
+
+{% block content_text %}
+<div id='content-text'>
+    <form>
+        <h1>{{ title }}</h1>
+        <div id="post-title-form">
+            <h3>Title</h3>
+            <input type='text' name='title' value="Really awesome post!">
+        </div>
+        <div>
+            <h3>Slug (url-friendly title)</h3>
+            <input type='text' name='slug' value='really-awesome-post'>
+        </div>
+        <div id="post-tags-form">
+            <h3>Tags (start with #, separated by commas)</h3>
+            <input type='text' name='tags' value="#poop, #hashtag, #meta">
+        </div>
+        <div id="post-content-form">
+            <h3>Content (markdown format)</h3>
+            <textarea type='text' name='content'>
+# The title
+The rest of the post goes here...
+![some image](https://d17fnq9dkz9hgj.cloudfront.net/uploads/2012/11/152964589-welcome-home-new-cat-632x475.jpg)
+            </textarea>
+        </div>
+        <div id="post-submission-buttons">
+            <button type="submit" name="publish" formaction="{{ url_for('create_post') }}" formmethod='post'>Publish</button>
+            <button type="submit" name="preview" formaction="{{ url_for('preview_post') }}" formmethod='post'>Preview</button>
+            <a href="{{ url_for('blog_landing') }}"><button type="button">Cancel</button></a>
+        </div>
+    </form>
+</div>
+{% endblock %}

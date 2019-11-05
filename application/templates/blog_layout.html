@@ -1,6 +1,7 @@
 {% extends "sidebar_layout.html" %}
 <!-- Head -->
 {% block stylesheets %}
+    {{ super() }}
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/sidebar_style.css')}}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/blog_style.css')}}">
 {% endblock %}
@@ -12,19 +13,20 @@
 <!-- Sidebar -->
 {% block sidebar_title %}Posts{% endblock %}
 {% block sidebar_content %}
-    {% for tag, posts in tag_to_posts.items() %}
+    {% for tag, posts in g.tag_to_posts.items() %}
         <li class="tag">
             <a onclick="toggleListExpand(this)" style="display: block;">
+                <!-- @html-ignore  -->
                 <h3 class="tag-hx" style="color: {{ posts['color'] }};">
                     {{ tag }} ({{ posts['count'] }})
                     <span class="collapse-indicator">[+]</span>
                 </h3>
             </a>
             <ul>
-            {% for title, link in zip(posts['title'], posts['link']) %}
+            {% for title, slug in zip(posts['title'], posts['slug']) %}
                 <li>
                     <h4 class="post-hx">
-                        <a href="{{ url_for('blog_post', link=link) }}">{{ title }}</a>
+                        <a href="{{ url_for('blog_post', slug=slug) }}">{{ title }}</a>
                     </h4>
                 </li>
             {% endfor %}
@@ -36,8 +38,8 @@
 <!-- Main content -->
 {% block content_text %}
     <div id="content-text">
-        <h5>Posted {{ posted_date }}</h5>
-        <h5>Tags: {{ post_tags|safe }}</h5>
+        {% if posted_date %}<h5>Posted {{ posted_date }}</h5>{% endif %}
+        {% if post_tags %}<h4>Tags: {{ post_tags|safe }}</h4>{% endif %}
         {{ content_text|markdown }}
     </div>
 {% endblock %}

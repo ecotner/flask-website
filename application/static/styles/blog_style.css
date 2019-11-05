@@ -1,3 +1,8 @@
+p {
+    line-height: 2em;
+    font-size: 14pt;
+}
+
 img[alt=blog-img] {
     max-height: 250px;
     display: block;
@@ -22,4 +27,17 @@ img[alt=blog-img] {
 
 .collapse-indicator {
     font-family: 'Courier New', Courier, monospace;
+}
+
+input {
+    width: 50%;
+}
+
+#post-content-form textarea {
+    width: 100%;
+    height: 200px;
+}
+
+#post-submission-buttons {
+    margin-top: 20px;
 }

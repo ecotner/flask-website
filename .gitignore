@@ -5,3 +5,4 @@ flaskenv.sh
 db_config.py
 *test*
 *TEST*
+*secret*

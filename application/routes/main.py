@@ -32,7 +32,7 @@ nav_links = {
 
 
 @app.before_request
-def first():
+def get_nav_links():
     g.nav_links = nav_links
 
 
