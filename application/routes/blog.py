@@ -1,5 +1,6 @@
-from typing import Tuple, List, Dict
+from typing import Tuple, List, Dict, Union
 from functools import wraps
+import re
 
 from flask import (
     abort,
@@ -16,14 +17,14 @@ from flask_misaka import Misaka
 import pandas as pd
 
 from application import app
-from application.database.mysql import mysql_to_df
+# from application.database.mysql import mysql_to_df, open_mysql_connection
 from application.helper import temp_lru_cache
-from application.config import Config
-from application.secrets import SecretConfig
 
-config = Config()
-sconfig = SecretConfig()
 Misaka(app=app, math_explicit=True, math=True, highlight=True, fenced_code=False)
+
+########################################################################################
+##                       Blog-database interaction functions                          ##
+########################################################################################
 
 
 def get_posts_chronologically(
@@ -68,21 +69,21 @@ def get_post_by(
     """
     df = mysql_to_df(query, database="BLOG")
     tags = zip(df["tag"], df["color"])
-    tags = [(f"#{t}", c) for t, c in sorted(tags, key=lambda x: x[0])]
+    tags = [(t, c) for t, c in sorted(tags, key=lambda x: x[0])]
     return post, tags
 
 
-@temp_lru_cache(maxsize=10, dt=config["BLOG_REFRESH_INTERVAL"])
+@temp_lru_cache(maxsize=10, dt=app.config["BLOG_REFRESH_INTERVAL"])
 def get_post_by_slug(slug: str) -> Tuple[pd.Series, List[str]]:
     return get_post_by(slug=slug)
 
 
-@temp_lru_cache(maxsize=1, dt=config["BLOG_REFRESH_INTERVAL"])
+@temp_lru_cache(maxsize=1, dt=app.config["BLOG_REFRESH_INTERVAL"])
 def get_most_recent_post_metadata():
     return get_posts_chronologically(text=False, start=1, end=1).iloc[0]
 
 
-@temp_lru_cache(maxsize=1, dt=config["BLOG_REFRESH_INTERVAL"])
+@temp_lru_cache(maxsize=1, dt=app.config["BLOG_REFRESH_INTERVAL"])
 def map_tags_to_posts() -> Dict[str, Dict[str, str]]:
     """Queries the database for a map from tags to post slugs.
 )
@@ -127,7 +128,7 @@ def map_tags_to_posts() -> Dict[str, Dict[str, str]]:
     return X
 
 
-def add_blog_sidebar(func):
+def tag2posts_context(func):
     @wraps(func)
     def inner(*args, **kwargs):
         g.tag_to_posts = map_tags_to_posts()
@@ -136,21 +137,84 @@ def add_blog_sidebar(func):
     return inner
 
 
+def parse_tags(tags: Union[List[str], str]) -> List[str]:
+    if isinstance(tags, str):
+        tags = re.sub(r"\s*", "", tags)
+        tags = re.sub(r"#+", "#", tags)
+        tags = re.sub(r"\-+", "-", tags)
+        tags = re.findall(r"#(\w+(\-\w+)*),?", tags)
+        tags = list(zip(*tags))[0]
+    for t in tags:
+        assert re.fullmatch(r"^(([a-zA-Z0-9]+)\-?)+[a-zA-Z0-9]$", t)
+    return tags
+
+
+def submit_post_to_database(post):
+    conn = open_mysql_connection(database="BLOG")
+    # Insert tags into `tags` table
+    # Insert post into `posts` table
+    # Get the
+    # Insert post/tag pairs into
+
+
+########################################################################################
+##                                  Blog post class                                   ##
+########################################################################################
+
+
+class InvalidBlogPostException(Exception):
+    pass
+
+
+class BlogPost:
+    def __init__(
+        self,
+        title: str,
+        slug: str,
+        text: str,
+        tags: Union[List[str], str],
+        date: Union[pd.Timestamp, str],
+        tag_colors: List[str] = None,
+    ):
+        # Make sure it's valid input
+        try:
+            for s in [title, slug, text]:
+                assert isinstance(s, str)
+                assert len(s) > 0
+            assert re.fullmatch(r"^(([a-zA-Z0-9]+)\-?)+[a-zA-Z0-9]$", slug)
+            tags = parse_tags(tags)
+            assert len(tags) > 0
+            date = pd.Timestamp(date)
+            assert isinstance(date, pd.Timestamp)
+        except AssertionError:
+            raise InvalidBlogPostException
+        self.title = title
+        self.slug = slug
+        self.text = text
+        self.tags = tags
+        self.date = date
+        self.tag_colors = tag_colors
+
+
+########################################################################################
+##                                   Blog routes                                      ##
+########################################################################################
+
+
 @app.route("/blog", strict_slashes=False)
-@add_blog_sidebar
+@tag2posts_context
 def blog_landing():
     # Redirect to the most recent post
     post = get_most_recent_post_metadata()
-    return blog_post(post["slug"])
+    return redirect(url_for("blog_post", slug=post["slug"]))
 
 
 @app.route("/blog/<slug>")
-@add_blog_sidebar
+@tag2posts_context
 def blog_post(slug: str):
-    # tag2post = map_tags_to_posts()
     post, tags = get_post_by_slug(slug)
-    tags = [f"<span style='color: {c}'>{t}</span>" for t, c in tags]
-    tags = ", ".join(tags)
+    # tags = [f"<span style='color: {c}'>{t}</span>" for t, c in tags]
+    # tags = ", ".join(tags)
     text = post["text"]
     title = post["title"]
     date = (
@@ -158,12 +222,15 @@ def blog_post(slug: str):
         .tz_localize("US/Eastern")
         .strftime("%b %-d, %Y; %H:%M:%S EST")
     )
+    post = BlogPost(
+        title=title, text=text, date=date, tags=list(zip(*tags))[0], slug=slug
+    )
     return render_template(
         template_name_or_list="blog_layout.html",
-        page_title=title,
-        content_text=text,
-        posted_date=date,
-        post_tags=tags,
+        page_title=post.title,
+        content_text=post.text,
+        posted_date=post.date,
+        post_tags=post.tags,
     )
 
 
@@ -187,7 +254,7 @@ def login():
     next_url = request.args.get("next") or request.form.get("next")
     if request.method == "POST" and request.form.get("password"):
         password = request.form.get("password")
-        if password == sconfig.ADMIN_PASSWORD:
+        if password == app.config["ADMIN_PASSWORD"]:
             session["logged_in"] = True
             session.permanent = True
             return redirect(next_url or url_for("index"))
@@ -205,30 +272,70 @@ def logout():
 
 
 @app.route("/blog/create", methods=["GET", "POST"])
-@add_blog_sidebar
+@tag2posts_context
 def create_post():
-    if request.method == "POST":
-        pass
+    # If making GET request, just show the default (blank) post creation page.
+    if request.method == "GET":
+        return render_template("create_edit_post.html", title="Create new post")
+    # If making POST request, first verify that all necessary fields are valid
+    try:
+        post = BlogPost(
+            title=request.form["title"],
+            slug=request.form["slug"],
+            text=request.form["content"],
+            tags=request.form["tags"],
+            date=pd.Timestamp(pd.datetime.now()),
+        )
+    # Return flash warning of invalid submission
+    except (InvalidBlogPostException, KeyError):
+        flash("Invalid submission. Please fix and resubmit.", "warning")
+        return render_template(
+            template_name_or_list="create_edit_post.html",
+            title="Create new post",
+            post_title=request.form.get("title", ""),
+            post_slug=request.form.get("slug", ""),
+            post_tags=request.form.get("tags", ""),
+            post_content=request.form.get("content", ""),
+        )
+    # TODO: If everything is valid then submit to the database
     return render_template("create_edit_post.html", title="Create new post")
 
 
 @app.route("/blog/preview", methods=["GET", "POST"])
 # @login_required
-@add_blog_sidebar
+@tag2posts_context
 def preview_post():
+    # Shouldn't be able to get here with a GET request
     if request.method == "GET":
         abort(404)
-    title = request.form["title"]
-    # slug = request.form["slug"]
-    text = request.form["content"]
-    tags = request.form["tags"]
-    date = pd.Timestamp(pd.datetime.now())
+    # Verify all entries are good
+    try:
+        post = BlogPost(
+            title=request.form["title"],
+            slug=request.form["slug"],
+            text=request.form["content"],
+            tags=request.form["tags"],
+            date=pd.Timestamp(pd.datetime.now()),
+        )
+    # Return flash warning of invalid submission
+    except (InvalidBlogPostException, KeyError):
+        flash("Invalid submission. Please fix and resubmit.", "warning")
+        return render_template(
+            template_name_or_list="create_edit_post.html",
+            title="Create new post",
+            post_title=request.form.get("title", ""),
+            post_slug=request.form.get("slug", ""),
+            post_tags=request.form.get("tags", ""),
+            post_content=request.form.get("content", ""),
+        )
+    # Return rendered preview of post
     return render_template_string(
         render_template(
             template_name_or_list="blog_layout.html",
-            page_title=title,
-            content_text=text,
-            posted_date=date,
-            post_tags=tags,
+            page_title=post.title,
+            posted_date=post.date,
+            post_tags=post.tags,
+            content_text=post.text,
+            is_submission=True,
         )
     )

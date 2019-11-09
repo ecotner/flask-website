@@ -4,25 +4,36 @@
 {% block content_text %}
 <div id='content-text'>
     <form>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul class='flashes'>
+                    {% for msg in messages %}
+                        <li><h2>{{ msg }}</h2></li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
         <h1>{{ title }}</h1>
         <div id="post-title-form">
             <h3>Title</h3>
-            <input type='text' name='title' value="Really awesome post!">
+            <input type='text' name='title' value="{{ post_title if post_title else '' }}">
         </div>
         <div>
             <h3>Slug (url-friendly title)</h3>
-            <input type='text' name='slug' value='really-awesome-post'>
+            <input type='text' name='slug' value="{{ post_slug if post_slug else '' }}">
         </div>
         <div id="post-tags-form">
             <h3>Tags (start with #, separated by commas)</h3>
-            <input type='text' name='tags' value="#poop, #hashtag, #meta">
+            <input type='text' name='tags' value="{{ post_tags if post_tags else '' }}">
         </div>
         <div id="post-content-form">
-            <h3>Content (markdown format)</h3>
+            <h3>Content (markdown format; tag images with <code>blog-img</code> to center/standardize size)</h3>
             <textarea type='text' name='content'>
-# The title
-The rest of the post goes here...
-![some image](https://d17fnq9dkz9hgj.cloudfront.net/uploads/2012/11/152964589-welcome-home-new-cat-632x475.jpg)
+{% if post_content %}{{ post_content }}{% else %}# The title
+The rest of the post goes here... what a pretty cat!
+
+![blog-img](https://d17fnq9dkz9hgj.cloudfront.net/uploads/2012/11/152964589-welcome-home-new-cat-632x475.jpg)
+{% endif %}
             </textarea>
         </div>
         <div id="post-submission-buttons">

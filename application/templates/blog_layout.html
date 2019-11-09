@@ -7,7 +7,6 @@
 {% endblock %}
 {% block head_scripts %}
     <script src="{{ url_for('static', filename='js/blog.js') }}"></script>
-    <!-- <script>alert('derp')</script> -->
 {% endblock %}
 
 <!-- Sidebar -->
@@ -16,8 +15,7 @@
     {% for tag, posts in g.tag_to_posts.items() %}
         <li class="tag">
             <a onclick="toggleListExpand(this)" style="display: block;">
-                <!-- @html-ignore  -->
-                <h3 class="tag-hx" style="color: {{ posts['color'] }};">
+                <h3 class="tag-hx" style="color: {{ posts['color'] }}">
                     {{ tag }} ({{ posts['count'] }})
                     <span class="collapse-indicator">[+]</span>
                 </h3>
@@ -41,5 +39,11 @@
         {% if posted_date %}<h5>Posted {{ posted_date }}</h5>{% endif %}
         {% if post_tags %}<h4>Tags: {{ post_tags|safe }}</h4>{% endif %}
         {{ content_text|markdown }}
+        {% if is_submission %}
+        <!-- Create submission button if previewing post -->
+        <form>
+            <button type="submit" formaction="{{ url_for('submit_post') }}" formmethod="POST">Publish</button>
+        </form>
+        {% endif %}
     </div>
 {% endblock %}
