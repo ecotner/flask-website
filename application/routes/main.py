@@ -15,7 +15,6 @@ from flask import (
 )
 from flask_misaka import Misaka
 
-from application.database.mysql import mysql_to_df
 from application import app
 
 Misaka(app=app, math_explicit=True, math=True, highlight=True, fenced_code=False)
@@ -26,7 +25,7 @@ nav_links = {
     "datascience": "Data Science",
     "physics": "Physics",
     "github": "GitHub",
-    "blog_landing": "Blog",
+    # "blog_landing": "Blog",
     "about": "About / Contact",
 }
 
@@ -106,7 +105,3 @@ def about():
         banner_h2="",
         text=text,
     )
-
-
-# if __name__ == "__main__":
-#     app.run(debug=True)
