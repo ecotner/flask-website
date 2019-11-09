@@ -1,8 +1,10 @@
 .vscode
 .DS_Store
 __pycache__
-flaskenv.sh
-db_config.py
+.ipynb_checkpoints
+crap
 *test*
 *TEST*
 *secret*
+flask.cfg
+ssh_tunnel.sh

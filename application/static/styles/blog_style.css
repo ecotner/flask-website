@@ -41,3 +41,15 @@ input {
 #post-submission-buttons {
     margin-top: 20px;
 }
+
+.flashes {
+    width: 100%;
+    background-color: red;
+    list-style-type: none;
+}
+
+.flashes li {
+    color: black;
+    font-weight: bold;
+    text-align: center;
+}

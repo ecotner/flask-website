@@ -1,6 +1,5 @@
 from functools import wraps, lru_cache
 from time import time
-from typing import Callable
 
 
 def temp_lru_cache(maxsize, dt):
