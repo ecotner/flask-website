@@ -19,7 +19,7 @@
     <div id="navbar">
         <ul>
             <li id="navbar-title">Eric Cotner</li>
-            {% for k, v in g.nav_links.items() %}
+            {% for k, v in NAV_LINKS.items() %}
             <li><a href="{{ url_for(k) }}">{{v}}</a></li>
             {% endfor %}
         </ul>

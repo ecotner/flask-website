@@ -2,8 +2,12 @@ import os
 
 
 class BaseConfig:
-    # Cache blog content, reload this often
+    """ Define base configuration parameters. """
+
+    # Cache blog content, reload this often, in seconds
     BLOG_REFRESH_INTERVAL = 3600 * 12
+    BUILD_FRESH_DB = False  # drops all tables and builds them fresh
+    DB_SEED_MODULE = None  # path for the seed data to build fresh tables
 
     def __getitem__(self, key):
         try:
@@ -13,6 +17,8 @@ class BaseConfig:
 
 
 class BlogDBConfig(BaseConfig):
+    """ Defines configuration parameters relevant to the blog database connections. """
+
     # Sets up the database connection for the blog
     BLOG_DB_PROTOCOL = "mysql"
     BLOG_DB_HOST = os.environ["MYSQL_LOCAL_HOST"]
@@ -30,9 +36,14 @@ class BlogDBConfig(BaseConfig):
 
 
 class DevConfig(BlogDBConfig):
+    """ Configuration for development work. """
+
     BLOG_DB_NAME = os.environ["MYSQL_BLOG_DEV_DB"]
+    BUILD_FRESH_DB = True
+    DB_SEED_MODULE = "application.testing.seed_db"
 
 
 class ProdConfig(BlogDBConfig):
-    BLOG_DB_NAME = os.environ["MYSQL_BLOG_PROD_DB"]
+    """ Configuration for production """
 
+    BLOG_DB_NAME = os.environ["MYSQL_BLOG_PROD_DB"]

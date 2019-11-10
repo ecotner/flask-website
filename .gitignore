@@ -3,8 +3,6 @@
 __pycache__
 .ipynb_checkpoints
 crap
-*test*
-*TEST*
 *secret*
 flask.cfg
 ssh_tunnel.sh

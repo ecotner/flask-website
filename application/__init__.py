@@ -1,4 +1,5 @@
 from typing import Union
+from importlib import import_module
 
 from flask import Flask
 
@@ -16,11 +17,20 @@ def create_app(config: BaseConfig):
     app.config["SQLALCHEMY_DATABASE_URI"] = config.get_uri()
 
     # Set up database stuff
-    from application.database.models import db
+    from application.models import db
 
     db.init_app(app)
     with app.app_context():
-        db.create_all()
+        # Make fresh DB if specified by config
+        if app.config["BUILD_FRESH_DB"]:
+            # Drop and recreate tables
+            db.drop_all()
+            db.create_all()
+            # Seed the database with some fresh data
+            pkg = import_module(app.config["DB_SEED_MODULE"])
+            pkg.seed_db(app, db)
+        else:
+            db.create_all()
     return app
 
 

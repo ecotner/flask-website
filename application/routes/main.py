@@ -19,8 +19,7 @@ from application import app
 
 Misaka(app=app, math_explicit=True, math=True, highlight=True, fenced_code=False)
 
-
-nav_links = {
+app.jinja_env.globals["NAV_LINKS"] = {
     "index": "Home",
     "datascience": "Data Science",
     "physics": "Physics",
@@ -28,11 +27,6 @@ nav_links = {
     # "blog_landing": "Blog",
     "about": "About / Contact",
 }
-
-
-@app.before_request
-def get_nav_links():
-    g.nav_links = nav_links
 
 
 @app.route("/")
