@@ -8,10 +8,7 @@ db = SQLAlchemy()
 class User(db.Model):  # noqa
     __tablename__ = "users"
 
-    user_id = db.Column(
-        db.Integer, primary_key=True, nullable=False, autoincrement=True
-    )
-    username = db.Column(db.String(255), nullable=False, unique=True)
+    username = db.Column(db.String(255), nullable=False, primary_key=True)
     password = db.Column(db.String(255), nullable=False)
     email = db.Column(db.String(255), nullable=False)
     role = db.Column(db.String(255), nullable=False)
@@ -40,11 +37,10 @@ class Post(db.Model):  # noqa
     )
     title = db.Column(db.String(255), nullable=False)
     description = db.Column(db.String(255), nullable=True)
-    slug = db.Column(db.String(255), unique=True, nullable=False)
-    author_id = db.Column(db.Integer, db.ForeignKey("users.user_id"), nullable=False)
-    # author_nm = db.Column(
-    #     db.String(255), db.ForeignKey("users.username"), nullable=False
-    # )
+    slug = db.Column(db.String(255), unique=True, index=True, nullable=False)
+    author_nm = db.Column(
+        db.String(255), db.ForeignKey("users.username"), nullable=False
+    )
     text = db.Column(db.Text, nullable=False)
     visible = db.Column(db.Boolean, nullable=False, default=True)
     posted_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
@@ -52,8 +48,8 @@ class Post(db.Model):  # noqa
     update_date = db.Column(db.DateTime, nullable=True)
 
     # Relationships
-    author = db.relationship("User", backref="posts")
-    tags = db.relationship("Tag", secondary=post_tags)
+    author = db.relationship("User", foreign_keys=author_nm, backref="posts")
+    tags = db.relationship("Tag", secondary=post_tags, backref="posts")
 
     def __repr__(self):
         return f"<Post '{self.title}'>"
@@ -76,11 +72,14 @@ class Tag(db.Model):  # noqa
 class Comment(db.Model):  # noqa
     __tablename__ = "comments"
 
+    # Column definitions
     comment_id = db.Column(
         db.Integer, primary_key=True, nullable=False, autoincrement=True
     )
     post_id = db.Column(db.Integer, db.ForeignKey("posts.post_id"), nullable=False)
-    author_id = db.Column(db.Integer, db.ForeignKey("users.user_id"), nullable=False)
+    author_nm = db.Column(
+        db.String(255), db.ForeignKey("users.username"), nullable=False
+    )
     text = db.Column(db.Text, nullable=False)
     posted_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     visible = db.Column(db.Boolean, nullable=False, default=True)
@@ -88,8 +87,9 @@ class Comment(db.Model):  # noqa
     insert_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     update_date = db.Column(db.DateTime, nullable=True)
 
-    post = db.relationship("Post", backref="comments")
-    author = db.relationship("User", backref="all_comments")
+    # Relationships
+    post = db.relationship("Post", foreign_keys=post_id, backref="comments")
+    author = db.relationship("User", foreign_keys=author_nm, backref="comments")
 
     def __repr__(self):
         return (
