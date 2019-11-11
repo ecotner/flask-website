@@ -24,7 +24,7 @@ app.jinja_env.globals["NAV_LINKS"] = {
     "datascience": "Data Science",
     "physics": "Physics",
     "github": "GitHub",
-    # "blog_landing": "Blog",
+    "blog_landing": "Blog",
     "about": "About / Contact",
 }
 

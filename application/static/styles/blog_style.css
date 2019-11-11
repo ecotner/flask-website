@@ -53,3 +53,12 @@ input {
     font-weight: bold;
     text-align: center;
 }
+
+.post-header {
+    margin: 0;
+    padding: 0;
+}
+
+#content-text-header {
+    margin-top: 50px;
+}

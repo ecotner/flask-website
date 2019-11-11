@@ -12,16 +12,17 @@
 <!-- Sidebar -->
 {% block sidebar_title %}Posts{% endblock %}
 {% block sidebar_content %}
-    {% for tag, posts in g.tag_to_posts.items() %}
+    {% if g.tag2posts %}
+    {% for (tag, color), posts in g.tag2posts.items() %}
         <li class="tag">
             <a onclick="toggleListExpand(this)" style="display: block;">
-                <h3 class="tag-hx" style="color: {{ posts['color'] }}">
-                    {{ tag }} ({{ posts['count'] }})
+                <h3 class="tag-hx" style="color: {{ color }}">
+                    #{{ tag }} ({{ len(posts) }})
                     <span class="collapse-indicator">[+]</span>
                 </h3>
             </a>
             <ul>
-            {% for title, slug in zip(posts['title'], posts['slug']) %}
+            {% for title, slug in posts %}
                 <li>
                     <h4 class="post-hx">
                         <a href="{{ url_for('blog_post', slug=slug) }}">{{ title }}</a>
@@ -31,13 +32,28 @@
             </ul>
         </li>
     {% endfor %}
+    {% endif %}
 {% endblock %}
 
 <!-- Main content -->
 {% block content_text %}
     <div id="content-text">
-        {% if posted_date %}<h5>Posted {{ posted_date }}</h5>{% endif %}
-        {% if post_tags %}<h4>Tags: {{ post_tags|safe }}</h4>{% endif %}
+        <div id="content-text-header">
+            {% if post_title %}<h1 class="post-header">{{ post_title }}</h1>{% endif %}
+            {% if author or posted_date %}
+                <h4 class="post-header">
+                    {% if author %}by {{ author }}{% endif %}
+                    {% if posted_date %}on {{ posted_date }}{% endif %}
+                </h4>
+            {% endif %}
+            {% if post_tags %}
+                <h4 class="post-header">Tags: 
+                {% for tag in post_tags %}
+                    <span style="color: {{ tag.color }};">#{{ tag.tag }}, </span>
+                {% endfor %}
+                </h4>
+            {% endif %}
+        </div>
         {{ content_text|markdown }}
         {% if is_submission %}
         <!-- Create submission button if previewing post -->
