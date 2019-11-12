@@ -1,5 +1,21 @@
 {% extends "blog_layout.html" %}
+{% block stylesheets %}
+    {{ super() }}
+    <!-- multiselect dropdown css -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css">
+{% endblock %}
 {% block title %}{{ title }}{% endblock %}
+{% block head_scripts %}
+    {{ super() }}
+    <!-- jQuery for multiselect dropdown plugin -->
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js"></script>
+    <script type="text/javascript">
+        $(function() {
+            $(".chosen-select").chosen({width: '25%'});
+        });
+    </script>
+{% endblock %}
 
 {% block content_text %}
 <div id='content-text'>
@@ -16,29 +32,33 @@
         <h1>{{ title }}</h1>
         <div id="post-title-form">
             <h3>Title</h3>
-            <input type='text' name='title' value="{{ post_title if post_title else '' }}">
+            <input required type='text' name='title' value="{{ post_title if post_title else '' }}">
         </div>
         <div>
             <h3>Slug (url-friendly title)</h3>
-            <input type='text' name='slug' value="{{ post_slug if post_slug else '' }}">
+            <input required type='text' name='slug' value="{{ post_slug if post_slug else '' }}">
         </div>
         <div id="post-tags-form">
-            <h3>Tags (start with #, separated by commas)</h3>
-            <input type='text' name='tags' value="{{ post_tags if post_tags else '' }}">
+            <h3>Tags (can select multiple)</h3>
+            <select multiple required name='tags' class="chosen-select">
+                {% for tag in all_tags %}
+                <option class='tag-option' value="{{ tag.tag }}">#{{ tag.tag }}</option>
+                {% endfor %}
+            </select>
+            <!-- <input type='text' name='tags' value="{{ post_tags if post_tags else '' }}"> -->
         </div>
         <div id="post-content-form">
             <h3>Content (markdown format; tag images with <code>blog-img</code> to center/standardize size)</h3>
-            <textarea type='text' name='content'>
+            <textarea autofocus required type='text' name='content'>
 {% if post_content %}{{ post_content }}{% else %}# The title
 The rest of the post goes here... what a pretty cat!
 
 ![blog-img](https://d17fnq9dkz9hgj.cloudfront.net/uploads/2012/11/152964589-welcome-home-new-cat-632x475.jpg)
-{% endif %}
-            </textarea>
+{% endif %}</textarea>
         </div>
         <div id="post-submission-buttons">
             <button type="submit" name="publish" formaction="{{ url_for('create_post') }}" formmethod='post'>Publish</button>
-            <button type="submit" name="preview" formaction="{{ url_for('preview_post') }}" formmethod='post'>Preview</button>
+            {#<button type="submit" name="preview" formaction="{{ url_for('preview_post') }}" formmethod='post'>Preview</button>#}
             <a href="{{ url_for('blog_landing') }}"><button type="button">Cancel</button></a>
         </div>
     </form>

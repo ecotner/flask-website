@@ -8,10 +8,13 @@ db = SQLAlchemy()
 class User(db.Model):  # noqa
     __tablename__ = "users"
 
+    # Required columns
     username = db.Column(db.String(255), nullable=False, primary_key=True)
     password = db.Column(db.String(255), nullable=False)
     email = db.Column(db.String(255), nullable=False)
     role = db.Column(db.String(255), nullable=False)
+
+    # Nullable or have defaults
     date_joined = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     last_login = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     ip_address = db.Column(db.String(255), nullable=True)
@@ -31,21 +34,23 @@ post_tags = db.Table(
 class Post(db.Model):  # noqa
     __tablename__ = "posts"
 
-    # Column defintions
-    post_id = db.Column(
-        db.Integer, primary_key=True, nullable=False, autoincrement=True
-    )
+    # Required columns
     title = db.Column(db.String(255), nullable=False)
-    description = db.Column(db.String(255), nullable=True)
     slug = db.Column(db.String(255), unique=True, index=True, nullable=False)
     author_nm = db.Column(
         db.String(255), db.ForeignKey("users.username"), nullable=False
     )
     text = db.Column(db.Text, nullable=False)
+
+    # Nullable or have defaults
+    post_id = db.Column(
+        db.Integer, primary_key=True, nullable=False, autoincrement=True
+    )
+    description = db.Column(db.String(255), nullable=True)
+    update_date = db.Column(db.DateTime, nullable=True)
     visible = db.Column(db.Boolean, nullable=False, default=True)
     posted_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     insert_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    update_date = db.Column(db.DateTime, nullable=True)
 
     # Relationships
     author = db.relationship("User", foreign_keys=author_nm, backref="posts")
@@ -58,8 +63,11 @@ class Post(db.Model):  # noqa
 class Tag(db.Model):  # noqa
     __tablename__ = "tags"
 
-    tag_id = db.Column(db.Integer, primary_key=True, nullable=False, autoincrement=True)
+    # Required columns
     tag = db.Column(db.String(255), nullable=False, unique=True)
+
+    # Nullable or have defaults
+    tag_id = db.Column(db.Integer, primary_key=True, nullable=False, autoincrement=True)
     description = db.Column(db.String(255), nullable=True)
     color = db.Column(db.String(255), nullable=True)
     insert_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
@@ -72,15 +80,17 @@ class Tag(db.Model):  # noqa
 class Comment(db.Model):  # noqa
     __tablename__ = "comments"
 
-    # Column definitions
-    comment_id = db.Column(
-        db.Integer, primary_key=True, nullable=False, autoincrement=True
-    )
+    # Required columns
     post_id = db.Column(db.Integer, db.ForeignKey("posts.post_id"), nullable=False)
     author_nm = db.Column(
         db.String(255), db.ForeignKey("users.username"), nullable=False
     )
     text = db.Column(db.Text, nullable=False)
+
+    # Nullable or have defaults
+    comment_id = db.Column(
+        db.Integer, primary_key=True, nullable=False, autoincrement=True
+    )
     posted_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     visible = db.Column(db.Boolean, nullable=False, default=True)
     deleted = db.Column(db.Boolean, nullable=False, default=False)

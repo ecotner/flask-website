@@ -36,7 +36,7 @@ def seed_db(app, db):
         ai = Tag(tag="AI", description="artificial intelligence", color="red")
         humor = Tag(tag="humor", color="#9dc900", description="haha")
         math = Tag(tag="math", color="#00bf29")
-        cs = Tag(tag="comp_sci", color="#000dbf")
+        cs = Tag(tag="comp-sci", color="#000dbf")
         serious = Tag(tag="serious", color="#bf7900")
         politics = Tag(tag="politics", color="#a300a3")
         db.session.add_all([physics, ai, humor, math, cs, serious, politics])

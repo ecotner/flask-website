@@ -1,6 +1,4 @@
-from typing import Tuple, List, Dict, Union
 from functools import wraps
-import re
 from collections import defaultdict
 
 from flask import (
@@ -102,34 +100,50 @@ def blog_post(slug: str):
 ########################################################################################
 
 
-# @app.route("/blog/create", methods=["GET", "POST"])
-# @tag2posts_context
-# def create_post():
-#     # If making GET request, just show the default (blank) post creation page.
-#     if request.method == "GET":
-#         return render_template("create_edit_post.html", title="Create new post")
-#     # If making POST request, first verify that all necessary fields are valid
-#     try:
-#         post = BlogPost(
-#             title=request.form["title"],
-#             slug=request.form["slug"],
-#             text=request.form["content"],
-#             tags=request.form["tags"],
-#             date=pd.Timestamp(pd.datetime.now()),
-#         )
-#     # Return flash warning of invalid submission
-#     except (InvalidBlogPostException, KeyError):
-#         flash("Invalid submission. Please fix and resubmit.", "warning")
-#         return render_template(
-#             template_name_or_list="create_edit_post.html",
-#             title="Create new post",
-#             post_title=request.form.get("title", ""),
-#             post_slug=request.form.get("slug", ""),
-#             post_tags=request.form.get("tags", ""),
-#             post_content=request.form.get("content", ""),
-#         )
-#     # TODO: If everything is valid then submit to the database
-#     return render_template("create_edit_post.html", title="Create new post")
+@app.route("/blog/create", methods=["GET", "POST"])
+@tag2posts_context
+def create_post():
+    # If making GET request, just show the default (blank) post creation page.
+    if request.method == "GET":
+        all_tags = Tag.query.order_by(Tag.tag).all()
+        return render_template(
+            "create_edit_post.html", title="Create new post", all_tags=all_tags
+        )
+    # If making POST request, first verify that all necessary fields are valid
+    elif request.method == "POST":
+        # TODO: If everything is valid then submit to the database
+        try:
+            tags = request.form.getlist("tags")
+            print(tags)
+            tags = db.session.query(Tag).filter(Tag.tag.in_(tags)).all()
+            print(tags)
+            post = Post(
+                title=request.form["title"],
+                author_nm="admin",
+                slug=request.form["slug"],
+                text=request.form["content"],
+                posted_date=pd.datetime.utcnow(),
+                tags=tags,
+            )
+            db.session.add(post)
+            db.session.commit()
+            return redirect(url_for("blog_post", slug=post.slug))
+        # Return flash warning of invalid submission
+        except KeyError:
+            flash("Invalid submission. Please fix and resubmit.", "warning")
+            all_tags = Tag.query.order_by(Tag.tag).all()
+            return render_template(
+                template_name_or_list="create_edit_post.html",
+                title="Create new post",
+                post_title=request.form.get("title", ""),
+                post_slug=request.form.get("slug", ""),
+                post_tags=request.form.get("tags", ""),
+                post_content=request.form.get("content", ""),
+                all_tags=all_tags,
+            )
+            return render_template("create_edit_post.html", title="Create new post")
+    else:
+        abort(404)
 
 
 # @app.route("/blog/preview", methods=["GET", "POST"])

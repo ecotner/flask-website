@@ -7,13 +7,15 @@
     background-color: var(--sidebar-bg-color);
     width: var(--sidebar-width);
     display: flex;
-    justify-content: center;
+    /* justify-content: center; */
     overflow-y: scroll;
 }
 
 #sidebar ul {
     padding: 0;
-    margin: 0;
+    margin-left: 5%;
+    margin-right: 5%;
+    width: 100%;
 }
 
 #sidebar ul li {

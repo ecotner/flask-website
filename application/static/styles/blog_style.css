@@ -19,6 +19,7 @@ img[alt=blog-img] {
     display: none;
     list-style-type: square;
     margin-left: 20px;
+    margin-bottom: 5px;
 }
 
 .post-hx, .tag-hx {
@@ -61,4 +62,8 @@ input {
 
 #content-text-header {
     margin-top: 50px;
+}
+
+.tag-option {
+    color: black;
 }
