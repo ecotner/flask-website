@@ -32,25 +32,25 @@
             <h1>{{ title }}</h1>
             <div id="post-title-form">
                 <h3>Title</h3>
-                <input required autofocus type='text' name='title' value="{{ post_title if post_title else '' }}">
+                <input required autofocus type='text' name='post-title' value="{{ post_title if post_title else '' }}">
             </div>
             <div>
                 <h3>Slug (url-friendly title)</h3>
-                <input required type='text' name='slug' value="{{ post_slug if post_slug else '' }}">
+                <input required type='text' name='post-slug' value="{{ post_slug if post_slug else '' }}">
             </div>
             <div id="post-tags-form">
                 <h3>Tags (can select multiple)</h3>
-                <select multiple required name='tags' class="chosen-select">
+                <select multiple required name='post-tags' class="chosen-select">
                     {% for tag in all_tags %}
                     <option class='tag-option' value="{{ tag.tag }}"
                         {{ "selected=''" if tag.tag in post_tags }}>#{{ tag.tag }}</option>
                     {% endfor %}
                 </select>
             </div>
-            <div id="post-content-form">
+            <div id="post-text-form">
                 <h3>Content (markdown format; tag images with <code>blog-img</code> to center/standardize size)</h3>
-                <textarea required type='text' name='content'>
-{% if post_content %}{{ post_content }}{% else %}# The title
+                <textarea required type='text' name='post-text'>
+{% if post_text %}{{ post_text }}{% else %}# The title
 The rest of the post goes here. Images can be created like the one below.
 
 ![blog-img](https://d17fnq9dkz9hgj.cloudfront.net/uploads/2012/11/152964589-welcome-home-new-cat-632x475.jpg)
@@ -64,11 +64,16 @@ $$
 {% endif %}</textarea>
             </div>
             <div id="post-submission-buttons">
+                <button type="submit" name="button" value="preview" formaction="{{ url_for('preview_post', new_post=new_post) }}" formmethod='POST'>Preview</button>
+                {% if new_post %}
                 <button type="submit" name="button" value="publish" formaction="{{ url_for('create_post') }}" formmethod='POST'>Publish</button>
-                <button type="submit" name="button" value="preview" formaction="{{ url_for('preview_post') }}" formmethod='POST'>Preview</button>
                 <a href="{{ url_for('blog_landing') }}"><button type="button">Cancel</button></a>
+                {% else %}
+                <button type="submit" name="button" value="publish" formaction="{{ url_for('edit_post', slug=session['original_slug']) }}" formmethod='POST'>Publish</button>
+                <a href="{{ url_for('blog_post', slug=session['original_slug']) }}"><button type="button">Cancel</button></a>
+                {% endif %}
             </div>
         </form>
-        
+
     </div>
 {% endblock %}

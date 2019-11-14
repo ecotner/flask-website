@@ -36,7 +36,7 @@ input {
     width: 50%;
 }
 
-#post-content-form textarea {
+#post-text-form textarea {
     width: 100%;
     height: 200px;
 }

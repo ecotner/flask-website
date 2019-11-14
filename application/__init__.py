@@ -16,7 +16,7 @@ else:
 def create_app(config: BaseConfig):
     # Initialize the app
     app = Flask(__name__)
-    app.jinja_env.globals.update(zip=zip, len=len)
+    app.jinja_env.globals.update(zip=zip, len=len, bool=bool)
 
     # Add configuration
     app.config.from_object(config)

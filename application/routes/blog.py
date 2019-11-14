@@ -78,7 +78,7 @@ def blog_landing():
         page_title=post.title,
         post_title=post.title,
         author=post.author_nm,
-        content_text=post.text,
+        post_text=post.text,
         posted_date=post.posted_date.strftime("%c"),
         post_tags=tags,
     )
@@ -94,7 +94,7 @@ def blog_post(slug: str):
         page_title=post.title,
         post_title=post.title,
         author=post.author_nm,
-        content_text=post.text,
+        post_text=post.text,
         posted_date=post.posted_date.strftime("%c"),
         post_tags=tags,
     )
@@ -106,6 +106,7 @@ def blog_post(slug: str):
 
 
 def publish_post(*, tags, title, author_nm, slug, text):
+    assert len(tags) > 0
     tags = db.session.query(Tag).filter(Tag.tag.in_(tags)).all()
     post = Post(
         title=title,
@@ -119,6 +120,19 @@ def publish_post(*, tags, title, author_nm, slug, text):
     db.session.commit()
 
 
+def update_post(*, post_id, tags, title, author_nm, slug, text):
+    assert len(tags) > 0
+    tags = db.session.query(Tag).filter(Tag.tag.in_(tags)).all()
+    post = db.session.query(Post).filter(Post.post_id == post_id).first()
+    post.tags = tags
+    post.title = title
+    post.author_nm = author_nm
+    post.slug = slug
+    post.text = text
+    post.update_date = pd.datetime.utcnow()
+    db.session.commit()
+
+
 # TODO: make sure you have proper authorization to access this page
 @app.route("/blog/create", methods=["GET", "POST"])
 @tag2posts_context
@@ -127,20 +141,23 @@ def create_post():
     if request.method == "GET":
         all_tags = Tag.query.order_by(Tag.tag).all()
         return render_template(
-            "create_edit_post.html", title="Create new post", all_tags=all_tags
+            "create_edit_post.html",
+            title="Create new post",
+            all_tags=all_tags,
+            new_post=True,
         )
     # If making POST request, first verify that all necessary fields are valid
     elif request.method == "POST":
         if request.form["button"] == "publish":
             try:
                 # If everything is valid then submit to the database
-                slug = request.form["slug"]
+                slug = request.form["post-slug"]
                 publish_post(
-                    tags=request.form.getlist("tags"),
-                    title=request.form["title"],
+                    tags=request.form.getlist("post-tags"),
+                    title=request.form["post-title"],
                     author_nm="admin",
                     slug=slug,
-                    text=request.form["content"],
+                    text=request.form["post-text"],
                 )
                 return redirect(url_for("blog_post", slug=slug))
             # Return flash warning of invalid submission
@@ -151,13 +168,13 @@ def create_post():
                 return render_template(
                     template_name_or_list="create_edit_post.html",
                     title="Create new post",
-                    post_title=request.form.get("title", ""),
-                    post_slug=request.form.get("slug", ""),
-                    post_tags=request.form.get("tags", ""),
-                    post_content=request.form.get("content", ""),
+                    post_title=request.form.get("post-title", ""),
+                    post_slug=request.form.get("post-slug", ""),
+                    post_tags=request.form.get("post-tags", ""),
+                    post_text=request.form.get("post-text", ""),
                     all_tags=all_tags,
+                    new_post=True,
                 )
-                return render_template("create_edit_post.html", title="Create new post")
         elif request.form["button"] == "return-from-preview":
             # Get the pickled post from the session
             filename = session["previewed_post"]
@@ -173,26 +190,27 @@ def create_post():
                 post_title=post.title,
                 post_slug=post.slug,
                 post_tags=[t.tag for t in post.tags],
-                post_content=post.text,
+                post_text=post.text,
                 all_tags=all_tags,
+                new_post=True,
             )
     else:
         abort(404)
 
 
-@app.route("/blog/preview", methods=["GET", "POST"])
+@app.route("/blog/preview", methods=["POST"])
 # @login_required
 @tag2posts_context
 def preview_post():
     if request.method == "POST":
         # Prepare the post
-        tags = request.form.getlist("tags")
+        tags = request.form.getlist("post-tags")
         tags = db.session.query(Tag).filter(Tag.tag.in_(tags)).all()
         post = Post(
-            title=request.form["title"],
+            title=request.form["post-title"],
             author_nm="admin",
-            slug=request.form["slug"],
-            text=request.form["content"],
+            slug=request.form["post-slug"],
+            text=request.form["post-text"],
             posted_date=pd.datetime.utcnow(),
             tags=tags,
         )
@@ -201,16 +219,94 @@ def preview_post():
         with open(os.path.join(app.root_path, filename), "wb+") as fp:
             pickle.dump(post, fp)
         session["previewed_post"] = filename
+        new_post = False if (request.args["new_post"] == "False") else True
+        print(f"\n\nnew_post = {(type(new_post), new_post)}\n\n")
         return render_template(
             template_name_or_list="blog_layout.html",
-            is_preview=True,
             page_title=post.title,
             post_title=post.title,
+            post_slug=post.slug,
             author=post.author_nm,
-            content_text=post.text,
+            post_text=post.text,
             posted_date=post.posted_date.strftime("%c"),
             post_tags=tags,
+            is_preview=True,
+            new_post=new_post,
         )
     else:
         # Shouldn't be able to get here unless you make a POST request
+        abort(404)
+
+
+@app.route("/blog/<slug>/edit", methods=["GET", "POST"])
+@tag2posts_context
+def edit_post(slug: str):
+    if request.method == "GET":
+        # Get all the data for the given post from database
+        post = db.session.query(Post).filter(Post.slug == slug).first()
+        all_tags = db.session.query(Tag.tag).order_by(Tag.tag).all()
+        # Save post id and slug in session so can access later when updating
+        session['original_post_id'] = post.post_id
+        session['original_slug'] = slug
+        # Render the edit page
+        return render_template(
+            template_name_or_list="create_edit_post.html",
+            title="Edit existing post",
+            post_title=post.title,
+            post_slug=post.slug,
+            post_tags=[t.tag for t in post.tags],
+            post_text=post.text,
+            all_tags=all_tags,
+            new_post=False,
+        )
+    elif request.method == "POST":
+        # Determine whether publishing or coming back from preview
+        if request.form["button"] == "return-from-preview":
+            # Get the pickled post from the session
+            filename = session["previewed_post"]
+            with open(os.path.join(app.root_path, filename), "rb") as fp:
+                post = pickle.load(fp)
+            # Delete the pickle
+            del session["previewed_post"]
+            os.remove(os.path.join(app.root_path, filename))
+            all_tags = Tag.query.order_by(Tag.tag).all()
+            return render_template(
+                template_name_or_list="create_edit_post.html",
+                title="Edit existing post",
+                post_title=post.title,
+                post_slug=post.slug,
+                post_tags=[t.tag for t in post.tags],
+                post_text=post.text,
+                all_tags=all_tags,
+                new_post=False,
+            )
+        elif request.form["button"] == "publish":
+            try:
+                # If everything is valid then submit to the database
+                slug = request.form["post-slug"]
+                update_post(
+                    post_id=session['original_post_id'],
+                    tags=request.form.getlist("post-tags"),
+                    title=request.form["post-title"],
+                    author_nm="admin",
+                    slug=slug,
+                    text=request.form["post-text"],
+                )
+                return redirect(url_for("blog_post", slug=slug))
+            # Return flash warning of invalid submission
+            except (KeyError, AssertionError, IntegrityError) as e:
+                db.session.rollback()
+                flash("Invalid submission. Please fix and resubmit.", "warning")
+                all_tags = Tag.query.order_by(Tag.tag).all()
+                return render_template(
+                    template_name_or_list="create_edit_post.html",
+                    title="Edit existing post",
+                    post_title=request.form.get("post-title", ""),
+                    post_slug=request.form.get("post-slug", ""),
+                    post_tags=request.form.get("post-tags", ""),
+                    post_text=request.form.get("post-text", ""),
+                    all_tags=all_tags,
+                    new_post=False,
+                )
+    else:
         abort(404)
