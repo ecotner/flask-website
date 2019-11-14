@@ -18,49 +18,57 @@
 {% endblock %}
 
 {% block content_text %}
-<div id='content-text'>
-    <form>
-        {% with messages = get_flashed_messages() %}
-            {% if messages %}
-                <ul class='flashes'>
-                    {% for msg in messages %}
-                        <li><h2>{{ msg }}</h2></li>
+    <div id='content-text'>
+        <form>
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <ul class='flashes'>
+                        {% for msg in messages %}
+                            <li><h2>{{ msg }}</h2></li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endwith %}
+            <h1>{{ title }}</h1>
+            <div id="post-title-form">
+                <h3>Title</h3>
+                <input required autofocus type='text' name='title' value="{{ post_title if post_title else '' }}">
+            </div>
+            <div>
+                <h3>Slug (url-friendly title)</h3>
+                <input required type='text' name='slug' value="{{ post_slug if post_slug else '' }}">
+            </div>
+            <div id="post-tags-form">
+                <h3>Tags (can select multiple)</h3>
+                <select multiple required name='tags' class="chosen-select">
+                    {% for tag in all_tags %}
+                    <option class='tag-option' value="{{ tag.tag }}"
+                        {{ "selected=''" if tag.tag in post_tags }}>#{{ tag.tag }}</option>
                     {% endfor %}
-                </ul>
-            {% endif %}
-        {% endwith %}
-        <h1>{{ title }}</h1>
-        <div id="post-title-form">
-            <h3>Title</h3>
-            <input required type='text' name='title' value="{{ post_title if post_title else '' }}">
-        </div>
-        <div>
-            <h3>Slug (url-friendly title)</h3>
-            <input required type='text' name='slug' value="{{ post_slug if post_slug else '' }}">
-        </div>
-        <div id="post-tags-form">
-            <h3>Tags (can select multiple)</h3>
-            <select multiple required name='tags' class="chosen-select">
-                {% for tag in all_tags %}
-                <option class='tag-option' value="{{ tag.tag }}">#{{ tag.tag }}</option>
-                {% endfor %}
-            </select>
-            <!-- <input type='text' name='tags' value="{{ post_tags if post_tags else '' }}"> -->
-        </div>
-        <div id="post-content-form">
-            <h3>Content (markdown format; tag images with <code>blog-img</code> to center/standardize size)</h3>
-            <textarea autofocus required type='text' name='content'>
+                </select>
+            </div>
+            <div id="post-content-form">
+                <h3>Content (markdown format; tag images with <code>blog-img</code> to center/standardize size)</h3>
+                <textarea required type='text' name='content'>
 {% if post_content %}{{ post_content }}{% else %}# The title
-The rest of the post goes here... what a pretty cat!
+The rest of the post goes here. Images can be created like the one below.
 
 ![blog-img](https://d17fnq9dkz9hgj.cloudfront.net/uploads/2012/11/152964589-welcome-home-new-cat-632x475.jpg)
+
+If the alt tag reads `[blog-img]` like it does above, there'll be some sort of standard centering/scaling applied to the image.
+
+You can also use $\LaTeX$! You can then make nice equations like
+$$
+\tilde{\psi}(\boldsymbol{k}) = \int d^3x\, e^{ikx} \psi(\boldsymbol{x})
+$$
 {% endif %}</textarea>
-        </div>
-        <div id="post-submission-buttons">
-            <button type="submit" name="publish" formaction="{{ url_for('create_post') }}" formmethod='post'>Publish</button>
-            {#<button type="submit" name="preview" formaction="{{ url_for('preview_post') }}" formmethod='post'>Preview</button>#}
-            <a href="{{ url_for('blog_landing') }}"><button type="button">Cancel</button></a>
-        </div>
-    </form>
-</div>
+            </div>
+            <div id="post-submission-buttons">
+                <button type="submit" name="button" value="publish" formaction="{{ url_for('create_post') }}" formmethod='POST'>Publish</button>
+                <button type="submit" name="button" value="preview" formaction="{{ url_for('preview_post') }}" formmethod='POST'>Preview</button>
+                <a href="{{ url_for('blog_landing') }}"><button type="button">Cancel</button></a>
+            </div>
+        </form>
+        
+    </div>
 {% endblock %}

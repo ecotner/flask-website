@@ -10,14 +10,14 @@
 {% endblock %}
 
 <!-- Sidebar -->
-{% block sidebar_title %}Posts{% endblock %}
+{% block sidebar_title %}Posts (by tag){% endblock %}
 {% block sidebar_content %}
     {% if g.tag2posts %}
     {% for (tag, color), posts in g.tag2posts.items() %}
         <li class="tag">
             <a onclick="toggleListExpand(this)" style="display: block;">
-                <h3 class="tag-hx" style="color: {{ color }}">
-                    #{{ tag }} ({{ len(posts) }})
+                <h3 class="tag-hx">
+                    <span style="color: {{ color }};">#{{ tag }} ({{ len(posts) }})</span>
                     <span class="collapse-indicator">[+]</span>
                 </h3>
             </a>
@@ -55,10 +55,13 @@
             {% endif %}
         </div>
         {{ content_text|markdown }}
-        {% if is_submission %}
-        <!-- Create submission button if previewing post -->
+        {% if is_preview %}
+        <!-- Create button to go back to creation screen if previewing post -->
         <form>
-            <button type="submit" formaction="{{ url_for('submit_post') }}" formmethod="POST">Publish</button>
+            <button type="submit" name="button" value="return-from-preview"
+                formaction="{{ url_for('create_post') }}" formmethod="POST">
+                Go back
+            </button>
         </form>
         {% endif %}
     </div>

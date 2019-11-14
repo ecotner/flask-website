@@ -24,10 +24,12 @@ img[alt=blog-img] {
 
 .post-hx, .tag-hx {
     margin: 0;
+    /* float: left; */
 }
 
 .collapse-indicator {
     font-family: 'Courier New', Courier, monospace;
+    float: right;
 }
 
 input {

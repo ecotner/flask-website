@@ -4,6 +4,8 @@ import os
 class BaseConfig:
     """ Define base configuration parameters. """
 
+    ADMIN_PASSWORD = os.environ["ADMIN_PASSWORD"]
+
     # Cache blog content, reload this often, in seconds
     BLOG_REFRESH_INTERVAL = 3600 * 12
     BUILD_FRESH_DB = False  # drops all tables and builds them fresh

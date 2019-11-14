@@ -21,6 +21,7 @@ def create_app(config: BaseConfig):
     # Add configuration
     app.config.from_object(config)
     app.config["SQLALCHEMY_DATABASE_URI"] = config.get_uri()
+    app.secret_key = config.ADMIN_PASSWORD
 
     # Set up database stuff
     from application.models import db
