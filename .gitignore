@@ -1,8 +1,10 @@
 .vscode
 .DS_Store
 __pycache__
+venv
+py37
 .ipynb_checkpoints
 crap
 *secret*
-flask.cfg
+.envv
 ssh_tunnel.sh
