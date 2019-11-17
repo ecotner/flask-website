@@ -1,0 +1,26 @@
+#login-form {
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+#login-form div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+#login-form div p,
+#login-form div input {
+    margin-right: 10px;
+}
+
+.flashes {
+    width: 100%;
+    background-color: red;
+    list-style-type: none;
+}
+
+.flashes li {
+    font-weight: bold;
+    text-align: center;
+}

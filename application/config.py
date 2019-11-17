@@ -10,6 +10,7 @@ class BaseConfig:
     BLOG_REFRESH_INTERVAL = 3600 * 12
     BUILD_FRESH_DB = False  # drops all tables and builds them fresh
     DB_SEED_MODULE = None  # path for the seed data to build fresh tables
+    SESSION_EXPIRATION_LENGTH = 5  # Number of minutes before user session expires
 
     def __getitem__(self, key):
         try:

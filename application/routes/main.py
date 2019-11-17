@@ -5,15 +5,18 @@ Date: 2019-10-14
 A personal website. All works displayed here are subject to the Creative Commons'
 'Attribution-NonCommercial-ShareAlike 4.0 International' license.
 """
+from datetime import timedelta
+
+from flask_misaka import Misaka
 from flask import (
     g,
-    render_template,
-    url_for,
     redirect,
-    send_file,
+    render_template,
     render_template_string,
+    session,
+    send_file,
+    url_for,
 )
-from flask_misaka import Misaka
 
 from application import app
 
@@ -27,6 +30,14 @@ app.jinja_env.globals["NAV_LINKS"] = {
     "blog_landing": "Blog",
     "about": "About / Contact",
 }
+
+
+@app.before_request
+def set_session_expiration():
+    session.permanent = True
+    app.permanent_session_lifetime = timedelta(
+        minutes=app.config["SESSION_EXPIRATION_LENGTH"]
+    )
 
 
 @app.route("/")

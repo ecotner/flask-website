@@ -1,0 +1,39 @@
+{% extends "base_layout.html" %}
+{% block stylesheets %}
+    {{ super() }}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/login_style.css')}}">
+{% endblock %}
+
+{% block content_text %}
+<div id="login-form">
+    <form>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul class='flashes'>
+                    {% for msg in messages %}
+                        <li><h2>{{ msg }}</h2></li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+        <h1>Are you Eric? Prove it:</h1>
+        <div>
+            <p>Username:</p>
+            <input type="text" name="username" placeholder="Username" autofocus required>
+        </div>
+        <div>
+            <p>Password:</p>
+            <input type="password" name="password" placeholder="Password" required>
+        </div>
+        <div>
+            <input type="checkbox" required>
+            <p>I agree that I really, really, <em>really</em> am Eric, and not
+                just pretending. Because that would be wrong.</p>
+        </div>
+            <button type="submit"
+                formaction="{{ url_for('login', next_url=next_url) }}"
+                formmethod="POST">Submit</button>
+        </ul>
+    </form>
+</div>
+{% endblock %}

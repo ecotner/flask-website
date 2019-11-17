@@ -3,6 +3,7 @@ from collections import defaultdict
 import pickle
 import time
 import os
+from typing import Union
 
 from flask import (
     abort,
@@ -23,7 +24,7 @@ import pandas as pd
 from application import app
 from application.models import db
 from application.models import User, Post, Tag, Comment, post_tags
-from application.helper import temp_lru_cache
+from application.helper import temp_lru_cache, hashpw
 
 Misaka(app=app, math_explicit=True, math=True, highlight=True, fenced_code=False)
 
@@ -72,6 +73,18 @@ def tag2posts_context(func):
 def blog_landing():
     # Query and return most recent blog post
     post = Post.query.order_by(Post.posted_date.desc(), Post.post_id.desc()).first()
+    if post is None:
+        return render_template(
+            template_name_or_list="blog_layout.html",
+            page_title="Blog",
+            post_title="No recent posts!",
+            author="",
+            post_text=(
+                "Sorry, there aren't any posts on record right now."
+                " We hope to have more content in the near future!"
+            ),
+            posted_date=pd.datetime.utcnow(),
+        )
     tags = post.tags
     return render_template(
         template_name_or_list="blog_layout.html",
@@ -88,6 +101,8 @@ def blog_landing():
 @tag2posts_context
 def blog_post(slug: str):
     post = Post.query.filter(Post.slug == slug).first()
+    if post is None:
+        abort(404)
     tags = post.tags
     return render_template(
         template_name_or_list="blog_layout.html",
@@ -103,6 +118,62 @@ def blog_post(slug: str):
 ########################################################################################
 ##                                 Blog admin stuff                                   ##
 ########################################################################################
+
+####################### Authorization, login/logout functionality ######################
+
+
+def auth_required(roles: Union[str, set, list, tuple]):
+    if isinstance(roles, str):
+        roles = set([roles])
+    elif isinstance(roles, (list, tuple)):
+        roles = set(roles)
+
+    def outer(func):
+        @wraps(func)
+        def inner(*args, **kwargs):
+            if (session.get("logged_in") == "True") and set(
+                session.get("roles", [])
+            ) >= roles:
+                return func(*args, **kwargs)
+            return redirect(url_for("login", next_url=request.path))
+
+        return inner
+
+    return outer
+
+
+@app.route("/blog/login", methods=["GET", "POST"])
+def login():
+    # session["logged_in"] = "False"
+    next_url = request.args.get("next_url")
+    if request.method == "GET":
+        # Render login page
+        return render_template(template_name_or_list="login.html", next_url=next_url)
+    elif request.method == "POST":
+        # Get username and password, look up user in database
+        username = request.form["username"]
+        password = request.form["password"]
+        user = db.session.query(User).filter(User.username == username).first()
+        # Ensure password hashes match
+        hashed_pw = hashpw(password, username)
+        if (user is None) or (hashed_pw != user.password):
+            flash("Invalid username/password. Please fix and resubmit.", "warning")
+            return redirect(url_for("login", next_url=next_url))
+        # Create user session so they don't have to login repeatedly
+        session["logged_in"] = "True"
+        session["roles"] = [user.role]
+        session["username"] = user.username
+        # Update last login date on database
+        user.last_login = pd.datetime.utcnow()
+        db.session.commit()
+        # Redirect to next page
+        if next_url is None:
+            return redirect(url_for("blog_landing"))
+        else:
+            return redirect(next_url)
+
+
+########################## Post publishing/editing/creation ############################
 
 
 def publish_post(*, tags, title, author_nm, slug, text):
@@ -135,6 +206,7 @@ def update_post(*, post_id, tags, title, author_nm, slug, text):
 
 # TODO: make sure you have proper authorization to access this page
 @app.route("/blog/create", methods=["GET", "POST"])
+@auth_required("admin")
 @tag2posts_context
 def create_post():
     # If making GET request, just show the default (blank) post creation page.
@@ -155,7 +227,7 @@ def create_post():
                 publish_post(
                     tags=request.form.getlist("post-tags"),
                     title=request.form["post-title"],
-                    author_nm="admin",
+                    author_nm=session["username"],
                     slug=slug,
                     text=request.form["post-text"],
                 )
@@ -194,12 +266,10 @@ def create_post():
                 all_tags=all_tags,
                 new_post=True,
             )
-    else:
-        abort(404)
 
 
 @app.route("/blog/preview", methods=["POST"])
-# @login_required
+@auth_required("admin")
 @tag2posts_context
 def preview_post():
     if request.method == "POST":
@@ -208,7 +278,7 @@ def preview_post():
         tags = db.session.query(Tag).filter(Tag.tag.in_(tags)).all()
         post = Post(
             title=request.form["post-title"],
-            author_nm="admin",
+            author_nm=session["username"],
             slug=request.form["post-slug"],
             text=request.form["post-text"],
             posted_date=pd.datetime.utcnow(),
@@ -220,7 +290,6 @@ def preview_post():
             pickle.dump(post, fp)
         session["previewed_post"] = filename
         new_post = False if (request.args["new_post"] == "False") else True
-        print(f"\n\nnew_post = {(type(new_post), new_post)}\n\n")
         return render_template(
             template_name_or_list="blog_layout.html",
             page_title=post.title,
@@ -233,12 +302,10 @@ def preview_post():
             is_preview=True,
             new_post=new_post,
         )
-    else:
-        # Shouldn't be able to get here unless you make a POST request
-        abort(404)
 
 
 @app.route("/blog/<slug>/edit", methods=["GET", "POST"])
+@auth_required("admin")
 @tag2posts_context
 def edit_post(slug: str):
     if request.method == "GET":
@@ -246,8 +313,8 @@ def edit_post(slug: str):
         post = db.session.query(Post).filter(Post.slug == slug).first()
         all_tags = db.session.query(Tag.tag).order_by(Tag.tag).all()
         # Save post id and slug in session so can access later when updating
-        session['original_post_id'] = post.post_id
-        session['original_slug'] = slug
+        session["original_post_id"] = post.post_id
+        session["original_slug"] = slug
         # Render the edit page
         return render_template(
             template_name_or_list="create_edit_post.html",
@@ -285,10 +352,10 @@ def edit_post(slug: str):
                 # If everything is valid then submit to the database
                 slug = request.form["post-slug"]
                 update_post(
-                    post_id=session['original_post_id'],
+                    post_id=session["original_post_id"],
                     tags=request.form.getlist("post-tags"),
                     title=request.form["post-title"],
-                    author_nm="admin",
+                    author_nm=session["username"],
                     slug=slug,
                     text=request.form["post-text"],
                 )
@@ -308,5 +375,3 @@ def edit_post(slug: str):
                     all_tags=all_tags,
                     new_post=False,
                 )
-    else:
-        abort(404)

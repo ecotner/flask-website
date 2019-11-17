@@ -1,6 +1,7 @@
 def seed_db(app, db):
     with app.app_context():
         from application.models import User, Post, Tag, Comment
+        from application.helper import hashpw
 
         """ Seeds the database with some sample data to play around with. """
         # app.app_context()
@@ -11,21 +12,21 @@ def seed_db(app, db):
         # Define some users
         admin = User(
             username="admin",
-            password="super_secret_pass",
+            password=hashpw("super_secret_pass", "admin"),
             email="hey.it.me@gmail.com",
             role="admin",
             ip_address="127.0.0.1",
         )
         user = User(
             username="anonymous",
-            password="password",
+            password=hashpw("password", "anonymous"),
             email="fkn.anime.tiddies@gmail.com",
             role="user",
             ip_address=None,
         )
         heckler = User(
             username="some_idiot",
-            password="1234",
+            password=hashpw("1234", "some_idiot"),
             email="xxx.cod-fan.420.xxx@aol.com",
             role="user",
         )
