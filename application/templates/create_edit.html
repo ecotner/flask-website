@@ -64,16 +64,39 @@ $$
 {% endif %}</textarea>
             </div>
             <div id="post-submission-buttons">
-                <button type="submit" name="button" value="preview" formaction="{{ url_for('preview_post', new_post=new_post) }}" formmethod='POST'>Preview</button>
+                <button type="submit" name="button" value="preview"
+                    formaction="{{ url_for('preview_post', new_post=new_post) }}"
+                    formmethod='POST'>Preview</button>
                 {% if new_post %}
-                <button type="submit" name="button" value="publish" formaction="{{ url_for('create_post') }}" formmethod='POST'>Publish</button>
-                <a href="{{ url_for('blog_landing') }}"><button type="button">Cancel</button></a>
+                <button type="submit" name="button" value="publish"
+                    formaction="{{ url_for('create_post') }}"
+                    formmethod='POST'>Publish</button>
+                <a href="{{ url_for('blog_landing') }}">
+                    <button type="button">Cancel</button>
+                </a>
                 {% else %}
-                <button type="submit" name="button" value="publish" formaction="{{ url_for('edit_post', slug=session['original_slug']) }}" formmethod='POST'>Publish</button>
-                <a href="{{ url_for('blog_post', slug=session['original_slug']) }}"><button type="button">Cancel</button></a>
+                <button type="submit" name="button" value="publish"
+                    formaction="{{ url_for('edit_post', slug=session['original_slug']) }}"
+                    formmethod='POST'>Publish</button>
+                <a href="{{ url_for('blog_post', slug=session['original_slug']) }}">
+                    <button type="button">Cancel</button>
+                </a>
                 {% endif %}
             </div>
         </form>
 
-    </div>
+        {% if new_post %}
+        <form>
+            <h1>Create new tags</h1>
+            <h3>Input single tag (without '#' symbol)</h3>
+            <input type="text" name="new-tag" 
+                value="{{ new_tag if new_tag else '' }}" required>
+            <h3>Tag color</h3>
+            <input type="color" name="new-tag-color"
+                value="{{ new_tag_color if new_tag_color else '#FFFFFF' }}" required>
+            <button type="submit" name="button" value="new-tag"
+                formaction="{{ url_for('create_post') }}" formmethod="POST">Submit</button>
+        </form>
+        {% endif %}
+</div>
 {% endblock %}

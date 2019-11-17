@@ -24,7 +24,7 @@ import pandas as pd
 from application import app
 from application.models import db
 from application.models import User, Post, Tag, Comment, post_tags
-from application.helper import temp_lru_cache, hashpw
+from application.helper import temp_lru_cache, hashpw, validate_tag
 
 Misaka(app=app, math_explicit=True, math=True, highlight=True, fenced_code=False)
 
@@ -51,6 +51,7 @@ def tag2posts_context(func):
             .distinct()
             .join(post_tags, post_tags.c.tag_id == Tag.tag_id)
             .join(Post, post_tags.c.post_id == Post.post_id)
+            .filter(Post.visible == True)
             .order_by(Tag.tag, Post.posted_date.desc(), Post.post_id.desc())
             .all()
         )
@@ -72,7 +73,11 @@ def tag2posts_context(func):
 @tag2posts_context
 def blog_landing():
     # Query and return most recent blog post
-    post = Post.query.order_by(Post.posted_date.desc(), Post.post_id.desc()).first()
+    post = (
+        Post.query.filter(Post.visible == True)
+        .order_by(Post.posted_date.desc(), Post.post_id.desc())
+        .first()
+    )
     if post is None:
         return render_template(
             template_name_or_list="blog.html",
@@ -100,7 +105,7 @@ def blog_landing():
 @app.route("/blog/<slug>")
 @tag2posts_context
 def blog_post(slug: str):
-    post = Post.query.filter(Post.slug == slug).first()
+    post = Post.query.filter(Post.slug == slug and Post.visible == True).first()
     if post is None:
         abort(404)
     tags = post.tags
@@ -235,7 +240,7 @@ def create_post():
             # Return flash warning of invalid submission
             except (KeyError, AssertionError, IntegrityError) as e:
                 db.session.rollback()
-                flash("Invalid submission. Please fix and resubmit.", "warning")
+                flash("Invalid post submission. Please fix and resubmit.", "warning")
                 all_tags = Tag.query.order_by(Tag.tag).all()
                 return render_template(
                     template_name_or_list="create_edit.html",
@@ -265,6 +270,32 @@ def create_post():
                 post_text=post.text,
                 all_tags=all_tags,
                 new_post=True,
+            )
+        elif request.form["button"] == "new-tag":
+            # Verify correct format
+            tag = request.form["new-tag"]
+            color = request.form["new-tag-color"]
+            if validate_tag(tag):
+                tag = Tag(tag=tag, color=color)
+                # Submit to database
+                try:
+                    db.session.add(tag)
+                    db.session.commit()
+                except IntegrityError:
+                    db.session.rollback()
+                tag = None
+                new_color = None
+            else:
+                # Return warning if invalid
+                flash("Invalid tag submission. Please fix and resubmit.", "warning")
+            all_tags = Tag.query.order_by(Tag.tag).all()
+            return render_template(
+                "create_edit.html",
+                title="Create new post",
+                all_tags=all_tags,
+                new_post=True,
+                new_tag=tag,
+                new_color=color,
             )
 
 
