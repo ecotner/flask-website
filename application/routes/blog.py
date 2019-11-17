@@ -75,7 +75,7 @@ def blog_landing():
     post = Post.query.order_by(Post.posted_date.desc(), Post.post_id.desc()).first()
     if post is None:
         return render_template(
-            template_name_or_list="blog_layout.html",
+            template_name_or_list="blog.html",
             page_title="Blog",
             post_title="No recent posts!",
             author="",
@@ -87,7 +87,7 @@ def blog_landing():
         )
     tags = post.tags
     return render_template(
-        template_name_or_list="blog_layout.html",
+        template_name_or_list="blog.html",
         page_title=post.title,
         post_title=post.title,
         author=post.author_nm,
@@ -105,7 +105,7 @@ def blog_post(slug: str):
         abort(404)
     tags = post.tags
     return render_template(
-        template_name_or_list="blog_layout.html",
+        template_name_or_list="blog.html",
         page_title=post.title,
         post_title=post.title,
         author=post.author_nm,
@@ -213,7 +213,7 @@ def create_post():
     if request.method == "GET":
         all_tags = Tag.query.order_by(Tag.tag).all()
         return render_template(
-            "create_edit_post.html",
+            "create_edit.html",
             title="Create new post",
             all_tags=all_tags,
             new_post=True,
@@ -238,7 +238,7 @@ def create_post():
                 flash("Invalid submission. Please fix and resubmit.", "warning")
                 all_tags = Tag.query.order_by(Tag.tag).all()
                 return render_template(
-                    template_name_or_list="create_edit_post.html",
+                    template_name_or_list="create_edit.html",
                     title="Create new post",
                     post_title=request.form.get("post-title", ""),
                     post_slug=request.form.get("post-slug", ""),
@@ -257,7 +257,7 @@ def create_post():
             os.remove(os.path.join(app.root_path, filename))
             all_tags = Tag.query.order_by(Tag.tag).all()
             return render_template(
-                template_name_or_list="create_edit_post.html",
+                template_name_or_list="create_edit.html",
                 title="Create new post",
                 post_title=post.title,
                 post_slug=post.slug,
@@ -291,7 +291,7 @@ def preview_post():
         session["previewed_post"] = filename
         new_post = False if (request.args["new_post"] == "False") else True
         return render_template(
-            template_name_or_list="blog_layout.html",
+            template_name_or_list="blog.html",
             page_title=post.title,
             post_title=post.title,
             post_slug=post.slug,
@@ -317,7 +317,7 @@ def edit_post(slug: str):
         session["original_slug"] = slug
         # Render the edit page
         return render_template(
-            template_name_or_list="create_edit_post.html",
+            template_name_or_list="create_edit.html",
             title="Edit existing post",
             post_title=post.title,
             post_slug=post.slug,
@@ -338,7 +338,7 @@ def edit_post(slug: str):
             os.remove(os.path.join(app.root_path, filename))
             all_tags = Tag.query.order_by(Tag.tag).all()
             return render_template(
-                template_name_or_list="create_edit_post.html",
+                template_name_or_list="create_edit.html",
                 title="Edit existing post",
                 post_title=post.title,
                 post_slug=post.slug,
@@ -366,7 +366,7 @@ def edit_post(slug: str):
                 flash("Invalid submission. Please fix and resubmit.", "warning")
                 all_tags = Tag.query.order_by(Tag.tag).all()
                 return render_template(
-                    template_name_or_list="create_edit_post.html",
+                    template_name_or_list="create_edit.html",
                     title="Edit existing post",
                     post_title=request.form.get("post-title", ""),
                     post_slug=request.form.get("post-slug", ""),

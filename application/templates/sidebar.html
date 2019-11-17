@@ -1,7 +1,7 @@
-{% extends "base_layout.html" %}
+{% extends "base.html" %}
 {% block stylesheets %}
     {{ super() }}
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/sidebar_style.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/sidebar.css')}}">
 {% endblock %}
 {% block title %}{{ page_title }}{% endblock %}
 

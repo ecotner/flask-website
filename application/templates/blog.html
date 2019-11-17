@@ -1,9 +1,9 @@
-{% extends "sidebar_layout.html" %}
+{% extends "sidebar.html" %}
 <!-- Head -->
 {% block stylesheets %}
     {{ super() }}
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/sidebar_style.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/blog_style.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/sidebar.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/blog.css')}}">
 {% endblock %}
 {% block head_scripts %}
     <script src="{{ url_for('static', filename='js/blog.js') }}"></script>

@@ -29,6 +29,9 @@ class BlogDBConfig(BaseConfig):
     BLOG_DB_PORT = os.environ["MYSQL_PORT"]
     BLOG_DB_PASSWORD = os.environ["MYSQL_PASSWORD"]
     BLOG_DB_NAME = None
+    SQLALCHEMY_ENGINE_OPTIONS = {
+        "pool_recycle": 280,
+    }
 
     def get_uri(self) -> str:
         return (

@@ -45,7 +45,7 @@ def index():
     with app.open_resource("markdown/index.md", mode="r") as fo:
         text = fo.read()
     return render_template(
-        template_name_or_list="banner_layout.html",
+        template_name_or_list="banner.html",
         page_title="Eric Cotner",
         banner_img="banner-bullet-cluster.jpg",
         banner_desc="Bullet Cluster x-ray map taken by Chandra telescope",
@@ -60,7 +60,7 @@ def datascience():
     with app.open_resource("markdown/datascience.md", mode="r") as fo:
         text = fo.read()
     tmp = render_template(
-        template_name_or_list="banner_layout.html",
+        template_name_or_list="banner.html",
         page_title="Data Science - Eric Cotner",
         banner_img="clustering_comparison.png",
         banner_desc="A comparison of several unsupervised clustering techniques from `scikit-learn`",
@@ -76,7 +76,7 @@ def physics():
     with app.open_resource("markdown/physics.md", mode="r") as fo:
         text = fo.read()
     tmp = render_template(
-        template_name_or_list="banner_layout.html",
+        template_name_or_list="banner.html",
         page_title="Physics - Eric Cotner",
         banner_img="particle_tracks.svg",
         banner_desc="A collision event at the LHC",
@@ -102,7 +102,7 @@ def about():
     with app.open_resource("markdown/about.md", mode="r") as fo:
         text = fo.read()
     return render_template(
-        template_name_or_list="banner_layout.html",
+        template_name_or_list="banner.html",
         page_title="About Me - Eric Cotner",
         banner_img="honduras_dive.jpg",
         banner_desc="Scuba diving in Roatán, Honduras",
