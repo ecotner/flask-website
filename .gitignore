@@ -6,5 +6,6 @@ py37
 .ipynb_checkpoints
 crap
 *secret*
-.envv
+.env
 ssh_tunnel.sh
+application/temp_posts/*.pickle

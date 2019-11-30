@@ -24,14 +24,12 @@ class BlogDBConfig(BaseConfig):
 
     # Sets up the database connection for the blog
     BLOG_DB_PROTOCOL = "mysql://"
-    BLOG_DB_HOST = os.environ["MYSQL_LOCAL_HOST"]
+    BLOG_DB_HOST = ...
     BLOG_DB_USER = os.environ["MYSQL_USER"]
     BLOG_DB_PORT = os.environ["MYSQL_PORT"]
     BLOG_DB_PASSWORD = os.environ["MYSQL_PASSWORD"]
-    BLOG_DB_NAME = None
-    SQLALCHEMY_ENGINE_OPTIONS = {
-        "pool_recycle": 280,
-    }
+    BLOG_DB_NAME = ...
+    SQLALCHEMY_ENGINE_OPTIONS = {"pool_recycle": 280}
 
     def get_uri(self) -> str:
         return (
@@ -43,6 +41,7 @@ class BlogDBConfig(BaseConfig):
 class DevConfig(BlogDBConfig):
     """ Configuration for development work. """
 
+    BLOG_DB_HOST = os.environ["MYSQL_REMOTE_HOST"]
     BLOG_DB_NAME = os.environ["MYSQL_BLOG_DEV_DB"]
     BUILD_FRESH_DB = True
     DB_SEED_MODULE = "application.testing.seed_db"
@@ -52,4 +51,5 @@ class DevConfig(BlogDBConfig):
 class ProdConfig(BlogDBConfig):
     """ Configuration for production """
 
+    BLOG_DB_HOST = os.environ["MYSQL_LOCAL_HOST"]
     BLOG_DB_NAME = os.environ["MYSQL_BLOG_PROD_DB"]

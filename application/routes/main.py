@@ -89,7 +89,7 @@ def physics():
 
 @app.route("/github")
 def github():
-    return redirect(location=r"https://github.com/ecotner")
+    return redirect(location=r"https://github.com/ecotner?tab=repositories")
 
 
 @app.route("/resume")
