@@ -2,15 +2,21 @@
 <html>
 
 <head>
-    <!-- CSS stylesheet -->
+    <!-- CSS stylesheets -->
     {% block stylesheets %}
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/base.css')}}">
+    <!-- Code highlighting -->
+    <link rel="stylesheet"
+      href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.16.2/build/styles/hopscotch.min.css">
     {% endblock %}
     <!-- favicon can be found at https://www.cleanpng.com/png-atom-scalable-vector-graphics-text-editor-logo-6589277/download-png.html with "personal use" license -->
     <link rel="icon" , type="image/png" href="{{ url_for('static', filename='media/icon-atom.png')}}">
     <!-- MathJax support -->
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <!-- Code highlighting -->
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.16.2/build/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
     <title>{% block title %}{% endblock %}</title>
     {% block head_scripts %}{% endblock %}
 </head>

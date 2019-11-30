@@ -2,6 +2,7 @@ from importlib import import_module
 import os
 
 from flask import Flask
+from flask_misaka import Misaka
 
 from application.config import BaseConfig
 
@@ -17,6 +18,7 @@ def create_app(config: BaseConfig):
     # Initialize the app
     app = Flask(__name__)
     app.jinja_env.globals.update(zip=zip, len=len, bool=bool)
+    Misaka(app=app, math_explicit=True, math=True, highlight=False, fenced_code=True)
 
     # Add configuration
     app.config.from_object(config)

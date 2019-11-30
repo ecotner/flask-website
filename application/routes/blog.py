@@ -16,7 +16,6 @@ from flask import (
     session,
     url_for,
 )
-from flask_misaka import Misaka
 from flask_sqlalchemy import sqlalchemy
 from sqlalchemy.exc import IntegrityError
 import pandas as pd
@@ -26,7 +25,6 @@ from application.models import db
 from application.models import User, Post, Tag, Comment, post_tags
 from application.helper import temp_lru_cache, hashpw, validate_tag
 
-Misaka(app=app, math_explicit=True, math=True, highlight=True, fenced_code=False)
 
 ########################################################################################
 ##                       Blog-database interaction functions                          ##
@@ -321,17 +319,19 @@ def preview_post():
             pickle.dump(post, fp)
         session["previewed_post"] = filename
         new_post = False if (request.args["new_post"] == "False") else True
-        return render_template(
-            template_name_or_list="blog.html",
-            page_title=post.title,
-            post_title=post.title,
-            post_slug=post.slug,
-            author=post.author_nm,
-            post_text=post.text,
-            posted_date=post.posted_date.strftime("%c"),
-            post_tags=tags,
-            is_preview=True,
-            new_post=new_post,
+        return render_template_string(
+            render_template(
+                template_name_or_list="blog.html",
+                page_title=post.title,
+                post_title=post.title,
+                post_slug=post.slug,
+                author=post.author_nm,
+                post_text=post.text,
+                posted_date=post.posted_date.strftime("%c"),
+                post_tags=tags,
+                is_preview=True,
+                new_post=new_post,
+            )
         )
 
 

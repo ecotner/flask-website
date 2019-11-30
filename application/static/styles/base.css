@@ -40,10 +40,11 @@ code {
     background-color: gray;
     padding: 0 2px 0 2px;
     font-family: Courier, 'Courier New', monospace;
-    /* font-size: 12pt; */
 }
 
-pre code {padding: 10px}
+.hljs {overflow-x: auto;}
+
+/* pre code {padding: 10px} */
 
 /* main body */
 body {
@@ -66,9 +67,9 @@ body {
     --nav-bg-color: #333333;
     --nav-text-color: rgb(196, 196, 196);
     --nav-text-color-anim-fade: rgb(114, 114, 114);
-    --nav-pad-x: 30px;
-    --nav--title-font-size: 35pt;
-    --nav--link-font-size: 20pt;
+    --nav-pad-x: 15px;
+    --nav--title-font-size: 25pt;
+    --nav--link-font-size: 15pt;
     /* hover pad y should always be half the difference of the above quantities */
     --nav--hover-pad-y: 7.5pt; 
 }
