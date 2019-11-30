@@ -89,14 +89,16 @@ def blog_landing():
             posted_date=pd.datetime.utcnow(),
         )
     tags = post.tags
-    return render_template(
-        template_name_or_list="blog.html",
-        page_title=post.title,
-        post_title=post.title,
-        author=post.author_nm,
-        post_text=post.text,
-        posted_date=post.posted_date.strftime("%c"),
-        post_tags=tags,
+    return render_template_string(
+        render_template(
+            template_name_or_list="blog.html",
+            page_title=post.title,
+            post_title=post.title,
+            author=post.author_nm,
+            post_text=post.text,
+            posted_date=post.posted_date.strftime("%c"),
+            post_tags=tags,
+        )
     )
 
 
@@ -107,14 +109,16 @@ def blog_post(slug: str):
     if post is None:
         abort(404)
     tags = post.tags
-    return render_template(
-        template_name_or_list="blog.html",
-        page_title=post.title,
-        post_title=post.title,
-        author=post.author_nm,
-        post_text=post.text,
-        posted_date=post.posted_date.strftime("%c"),
-        post_tags=tags,
+    return render_template_string(
+        render_template(
+            template_name_or_list="blog.html",
+            page_title=post.title,
+            post_title=post.title,
+            author=post.author_nm,
+            post_text=post.text,
+            posted_date=post.posted_date.strftime("%c"),
+            post_tags=tags,
+        )
     )
 
 
