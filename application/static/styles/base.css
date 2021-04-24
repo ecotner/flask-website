@@ -1,8 +1,8 @@
 :root {
     --main-bg-color: rgb(37, 0, 31);
     --main-text-color: white;
-    --main-link-unvisited-color: rgb(192, 192, 192);
-    --main-link-visited-color: rgb(192, 192, 192);
+    --main-link-unvisited-color: rgb(0, 204, 175);
+    --main-link-visited-color: rgb(160, 46, 255);
     --main-link-hover-color: rgb(128, 128, 128);
 }
 
