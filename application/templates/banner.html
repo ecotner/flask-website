@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block stylesheets %}
+    {{ super() }}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/banner.css')}}">
+{% endblock %}
+{% block title %}{{ page_title }}{% endblock %}
+
+{% block banner %}
+<div id="banner">
+    <div id="banner-img"><img src="/static/media/{{ banner_img }}" alt="{{ banner_desc }}"></div>
+    <div id="banner-text">
+        <h1 class="banner-text">{{ banner_h1 }}</h1>
+        <h2 class="banner-text">{{ banner_h2 }}</h2>
+    </div>
+</div>
+{% endblock %}
+
+{% block content_text %}
+<div id="content-text">{{ text|markdown }}</div>
+{% endblock %}

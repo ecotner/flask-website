@@ -41,7 +41,7 @@ Read more about [my work](https://arxiv.org/abs/1612.02529) [here](http://newsro
 
 # My contributions to the field
 
-## Papers
+## Publications
 I have authored a variety of papers on the subject (most with the help of my brilliant collaborators), which can be found through paper aggregators such as [arXiv](https://arxiv.org/search/astro-ph?searchtype=author&query=Cotner%2C+E) (free preprints), [Google Scholar](https://scholar.google.com/citations?user=sERkI8cAAAAJ&hl=en&oi=ao) (peer-reviewed journals, potentially behind a paywall), and [InspireHEP](http://inspirehep.net/search?ln=en&p=a+cotner&of=hb&action_search=Search&sf=earliestdate&so=d) (basically same as arXiv). You can find my PhD dissertation indexed at the University of California's [eScholarship repository](https://escholarship.org/uc/item/8kt7j20g). If you would like to collaborate, please <a href="{{ url_for('about') }}">reach out</a>!
 
 ## Conferences

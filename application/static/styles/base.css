@@ -1,28 +1,22 @@
 :root {
-    --main-bg-color: rgb(38, 29, 43);
+    --main-bg-color: rgb(37, 0, 31);
     --main-text-color: white;
-    --main-link-unvisited-color: rgb(192, 192, 192);
-    --main-link-visited-color: rgb(192, 192, 192);
+    --main-link-unvisited-color: rgb(0, 204, 175);
+    --main-link-visited-color: rgb(160, 46, 255);
     --main-link-hover-color: rgb(128, 128, 128);
 }
 
+::-webkit-scrollbar-corner {
+    background-color: rgba(0,0,0,0);
+}
+
 /* main font family and color */
-h1, h2, h3, p, li {
+h1, h2, h3, h4, h5, h6, p, li {
     color: var(--main-text-color);
     /* font-family: Arial, Helvetica, sans-serif; */
     font-family: "Open Sans", Calibri, sans-serif;
 }
 
-/* Default font sizes */
-h1 {
-    font-size: 30pt;
-    margin-top: 50pt;
-}
-h2 {
-    font-size: 20pt;
-    margin-top: 30pt;
-}
-p, li {font-size: 15pt;}
 
 /* main anchor/link parameters */
 a:link {
@@ -40,15 +34,17 @@ a:hover {
 
 /* code display */
 code {
-    display: inline-block;
+    display: inline;
     color: black;
+    font-weight: bold;
     background-color: gray;
-    padding: 2px;
+    padding: 0 2px 0 2px;
     font-family: Courier, 'Courier New', monospace;
-    font-size: 12pt;
 }
 
-pre code {padding: 10px}
+.hljs {overflow-x: auto;}
+
+/* pre code {padding: 10px} */
 
 /* main body */
 body {
@@ -56,14 +52,14 @@ body {
     background-color: var(--main-bg-color);
     min-height: 100vh;
     min-width: 100%;
-    position: relative;
+    position: static;
 }
 
 /* ============================== */
 /*             Navbar             */
 /* ============================== */
 
-#navbar-wrapper {
+#navbar {
     position: sticky;
     top: 0;
     z-index: 9001;
@@ -71,11 +67,11 @@ body {
     --nav-bg-color: #333333;
     --nav-text-color: rgb(196, 196, 196);
     --nav-text-color-anim-fade: rgb(114, 114, 114);
-    --nav-pad-x: 30px;
-    --nav--title-font-size: 35pt;
-    --nav--link-font-size: 20pt;
+    --nav-pad-x: 15px;
+    --nav--title-font-size: 25pt;
+    --nav--link-font-size: 15pt;
     /* hover pad y should always be half the difference of the above quantities */
-    --nav--hover-pad-y: 8pt; 
+    --nav--hover-pad-y: 7.5pt; 
 }
 
 @keyframes rainbow-bg-animation-1 {
@@ -151,66 +147,22 @@ body {
 
 
 /* ============================== */
-/*            Content             */
+/*      Main content window       */
 /* ============================== */
 
 #content-wrapper {
-    /* width: 100%; */
     position: static;
-    padding-bottom: 100px;
+    overflow-y: auto;
 }
 
-#content {
-    position: static;
-    /* margin-top: 100px; */
-    padding-left: 15%;
-    padding-right: 15%;
-    overflow: auto;
-}
-
-/* ============================== */
-/*        Home page banner        */
-/* ============================== */
-
-#banner {
-    position: relative;
-    top: 0;
-}
-
-#banner-img {
+#main-content {
     position: static;
 }
 
-#banner-img img {
+#footer {
+    position: static;
     width: 100%;
-    display: block;
-}
-
-#banner-text {
-    position: absolute;
-    z-index: 10;
-    bottom: 10%;
-    left: 5%;
-}
-
-/* #banner-text h1 {font-size: 5vw;}
-#banner-text h2 {font-size: 2.5vw;} */
-#banner-text h1 {font-size: calc(15pt + 5vw);}
-#banner-text h2 {font-size: calc(10pt + 2.5vw);}
-.banner-text {
-    margin: 0;
-    color: white;
-    text-shadow: 0 0 3px black;
-}
-
-/* ============================== */
-/*             Footer             */
-/* ============================== */
-
-#footer-wrapper {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
+    padding-top: 150px;
 }
 
 .copyright,

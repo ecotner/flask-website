@@ -1,0 +1,72 @@
+{% extends "sidebar.html" %}
+<!-- Head -->
+{% block stylesheets %}
+    {{ super() }}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/sidebar.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/blog.css')}}">
+{% endblock %}
+{% block head_scripts %}
+    <script src="{{ url_for('static', filename='js/blog.js') }}"></script>
+{% endblock %}
+
+<!-- Sidebar -->
+{% block sidebar_title %}Posts (by tag){% endblock %}
+{% block sidebar_content %}
+    {% if g.tag2posts %}
+    {% for (tag, color), posts in g.tag2posts.items() %}
+        <li class="tag">
+            <a onclick="toggleListExpand(this)" style="display: block;">
+                <h3 class="tag-hx">
+                    <span style="color: {{ color }};">#{{ tag }} ({{ len(posts) }})</span>
+                    <span class="collapse-indicator">[+]</span>
+                </h3>
+            </a>
+            <ul>
+            {% for title, slug in posts %}
+                <li>
+                    <h4 class="post-hx">
+                        <a href="{{ url_for('blog_post', slug=slug) }}">{{ title }}</a>
+                    </h4>
+                </li>
+            {% endfor %}
+            </ul>
+        </li>
+    {% endfor %}
+    {% endif %}
+{% endblock %}
+
+<!-- Main content -->
+{% block content_text %}
+    <div id="content-text">
+        <div id="content-text-header">
+            {% if post_title %}<h1 class="post-header">{{ post_title }}</h1>{% endif %}
+            {% if author or posted_date %}
+                <h4 class="post-header">
+                    {% if author %}by {{ author }}{% endif %}
+                    {% if posted_date %}on {{ posted_date }}{% endif %}
+                </h4>
+            {% endif %}
+            {% if post_tags %}
+                <h4 class="post-header">Tags: 
+                {% for tag in post_tags %}
+                    <span style="color: {{ tag.color }};">#{{ tag.tag }}, </span>
+                {% endfor %}
+                </h4>
+            {% endif %}
+        </div>
+        {{ post_text|markdown }}
+        {% if is_preview %}
+        <!-- Create button to go back to creation screen if previewing post -->
+        <form>
+            <button type="submit" name="button" value="return-from-preview"
+                {% if new_post %}
+                formaction="{{ url_for('create_post') }}" formmethod="POST">
+                {% else %}
+                formaction="{{ url_for('edit_post', slug=post_slug) }}" formmethod="POST">
+                {% endif %}
+                Go back
+            </button>
+        </form>
+        {% endif %}
+    </div>
+{% endblock %}

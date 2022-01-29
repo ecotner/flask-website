@@ -1,4 +1,11 @@
 .vscode
 .DS_Store
 __pycache__
-flaskenv.sh
+venv
+py37
+.ipynb_checkpoints
+crap
+*secret*
+.env
+ssh_tunnel.sh
+application/temp_posts/*.pickle

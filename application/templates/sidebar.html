@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block stylesheets %}
+    {{ super() }}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/sidebar.css')}}">
+{% endblock %}
+{% block title %}{{ page_title }}{% endblock %}
+
+{% block sidebar %}
+<div id="sidebar">
+    <ul>
+        <li><h1 id="sidebar-title">{% block sidebar_title %}{% endblock %}</h1></li>
+        {% block sidebar_content %}{% endblock %}
+    </ul>
+</div>
+{% endblock %}
+

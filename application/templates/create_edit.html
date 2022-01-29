@@ -1,0 +1,102 @@
+{% extends "blog.html" %}
+{% block stylesheets %}
+    {{ super() }}
+    <!-- multiselect dropdown css -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css">
+{% endblock %}
+{% block title %}{{ title }}{% endblock %}
+{% block head_scripts %}
+    {{ super() }}
+    <!-- jQuery for multiselect dropdown plugin -->
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js"></script>
+    <script type="text/javascript">
+        $(function() {
+            $(".chosen-select").chosen({width: '25%'});
+        });
+    </script>
+{% endblock %}
+
+{% block content_text %}
+    <div id='content-text'>
+        <form>
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <ul class='flashes'>
+                        {% for msg in messages %}
+                            <li><h2>{{ msg }}</h2></li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endwith %}
+            <h1>{{ title }}</h1>
+            <div id="post-title-form">
+                <h3>Title</h3>
+                <input required autofocus type='text' name='post-title' value="{{ post_title if post_title else '' }}">
+            </div>
+            <div>
+                <h3>Slug (url-friendly title)</h3>
+                <input required type='text' name='post-slug' value="{{ post_slug if post_slug else '' }}">
+            </div>
+            <div id="post-tags-form">
+                <h3>Tags (can select multiple)</h3>
+                <select multiple required name='post-tags' class="chosen-select">
+                    {% for tag in all_tags %}
+                    <option class='tag-option' value="{{ tag.tag }}"
+                        {{ "selected=''" if tag.tag in post_tags }}>#{{ tag.tag }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div id="post-text-form">
+                <h3>Content (markdown format; tag images with <code>blog-img</code> to center/standardize size)</h3>
+                <textarea required type='text' name='post-text'>
+{% if post_text %}{{ post_text }}{% else %}# The title
+The rest of the post goes here. Images can be created like the one below.
+
+![blog-img](https://d17fnq9dkz9hgj.cloudfront.net/uploads/2012/11/152964589-welcome-home-new-cat-632x475.jpg)
+
+If the alt tag reads `[blog-img]` like it does above, there'll be some sort of standard centering/scaling applied to the image.
+
+You can also use $\LaTeX$! You can then make nice equations like
+$$
+\tilde{\psi}(\boldsymbol{k}) = \int d^3x\, e^{ikx} \psi(\boldsymbol{x})
+$$
+{% endif %}</textarea>
+            </div>
+            <div id="post-submission-buttons">
+                <button type="submit" name="button" value="preview"
+                    formaction="{{ url_for('preview_post', new_post=new_post) }}"
+                    formmethod='POST'>Preview</button>
+                {% if new_post %}
+                <button type="submit" name="button" value="publish"
+                    formaction="{{ url_for('create_post') }}"
+                    formmethod='POST'>Publish</button>
+                <a href="{{ url_for('blog_landing') }}">
+                    <button type="button">Cancel</button>
+                </a>
+                {% else %}
+                <button type="submit" name="button" value="publish"
+                    formaction="{{ url_for('edit_post', slug=session['original_slug']) }}"
+                    formmethod='POST'>Publish</button>
+                <a href="{{ url_for('blog_post', slug=session['original_slug']) }}">
+                    <button type="button">Cancel</button>
+                </a>
+                {% endif %}
+            </div>
+        </form>
+
+        {% if new_post %}
+        <form>
+            <h1>Create new tags</h1>
+            <h3>Input single tag (without '#' symbol)</h3>
+            <input type="text" name="new-tag" 
+                value="{{ new_tag if new_tag else '' }}" required>
+            <h3>Tag color</h3>
+            <input type="color" name="new-tag-color"
+                value="{{ new_tag_color if new_tag_color else '#FFFFFF' }}" required>
+            <button type="submit" name="button" value="new-tag"
+                formaction="{{ url_for('create_post') }}" formmethod="POST">Submit</button>
+        </form>
+        {% endif %}
+</div>
+{% endblock %}

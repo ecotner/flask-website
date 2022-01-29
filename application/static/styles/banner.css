@@ -1,0 +1,54 @@
+/* Default font sizes */
+h1 {
+    font-size: 30pt;
+    margin-top: 50pt;
+}
+h2 {
+    font-size: 20pt;
+    margin-top: 30pt;
+}
+p, li {font-size: 15pt;}
+
+/* ============================== */
+/*        Home page banner        */
+/* ============================== */
+
+#banner {
+    position: relative;
+    top: 0;
+}
+
+#banner-img {
+    position: static;
+}
+
+#banner-img img {
+    width: 100%;
+    display: block;
+}
+
+#banner-text {
+    position: absolute;
+    z-index: 10;
+    bottom: 10%;
+    left: 5%;
+}
+
+#banner-text h1 {font-size: calc(15pt + 5vw);}
+#banner-text h2 {font-size: calc(10pt + 2.5vw);}
+.banner-text {
+    margin: 0;
+    color: white;
+    text-shadow: 0 0 3px black;
+}
+
+
+/* ============================== */
+/*            Content             */
+/* ============================== */
+
+#content-text {
+    position: static;
+    padding-left: 15%;
+    padding-right: 15%;
+}
