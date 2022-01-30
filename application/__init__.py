@@ -34,12 +34,14 @@ def create_app(config: BaseConfig):
         if (
             os.environ.get("WERKZEUG_RUN_MAIN") == "true"
             and app.config["BUILD_FRESH_DB"]
+            and os.environ["FLASK_ENV"] == "development"
         ):
             # Seed the database with some fresh data
             pkg = import_module(app.config["DB_SEED_MODULE"])
             pkg.seed_db(app, db)
         else:
-            db.create_all()
+            pass
+            # db.create_all()
     return app
 
 
