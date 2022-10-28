@@ -9,3 +9,13 @@ I'm using some javascript plugin called Chosen for multiselect dropdowns:
 ```bash
 wget https://github.com/harvesthq/chosen/releases/download/v1.8.7/chosen_v1.8.7.zip
 ```
+
+## Notes
+* currently using `python` version `3.6.0`
+* currently using `mysql` version `5.7.34`
+
+## TODO
+* set up docker and docker-compose
+* set up mysql service and database
+* set up poetry
+* get app running on python3.10

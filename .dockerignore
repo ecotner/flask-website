@@ -1,0 +1,5 @@
+.venv
+.docker-compose.yaml
+.env
+application/static/media
+database
