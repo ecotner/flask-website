@@ -6,11 +6,13 @@ services:
       dockerfile: Dockerfile
       context: .
     env_file:
-      - .dev.env
+      - .prod.env
     networks:
       - website-app
     ports:
       - "4000:4000"
+    volumes:
+      - ./application/static/media:/app/application/static/media:ro
     depends_on:
       - db
   
@@ -21,7 +23,7 @@ services:
       - ./database/mysql:/var/lib/mysql
       - ./database/my.cnf:/etc/my.cnf
     env_file:
-      - .dev.env
+      - .prod.env
     networks:
       - website-app
     ports:

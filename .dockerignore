@@ -1,5 +1,6 @@
 .venv
 .docker-compose.yaml
-.env
+*.env
 application/static/media
 database
+__pycache__
