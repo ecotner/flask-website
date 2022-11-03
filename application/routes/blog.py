@@ -1,4 +1,5 @@
 from functools import wraps
+from datetime import datetime
 from collections import defaultdict
 import pickle
 import time
@@ -18,7 +19,6 @@ from flask import (
 )
 from flask_sqlalchemy import sqlalchemy
 from sqlalchemy.exc import IntegrityError
-import pandas as pd
 
 from application import app
 from application.models import db
@@ -86,7 +86,7 @@ def blog_landing():
                 "Sorry, there aren't any posts on record right now."
                 " We hope to have more content in the near future!"
             ),
-            posted_date=pd.datetime.utcnow(),
+            posted_date=datetime.utcnow()
         )
     tags = post.tags
     return render_template_string(
@@ -171,13 +171,21 @@ def login():
         session["roles"] = [user.role]
         session["username"] = user.username
         # Update last login date on database
-        user.last_login = pd.datetime.utcnow()
+        user.last_login = datetime.utcnow()
         db.session.commit()
         # Redirect to next page
         if next_url is None:
             return redirect(url_for("blog_landing"))
         else:
             return redirect(next_url)
+
+
+@app.route("/blog/logout")
+def logout():
+    session.pop("logged_in", None)
+    session.pop("roles", None)
+    session.pop("username", None)
+    return render_template(template_name_or_list="logout.html")
 
 
 ########################## Post publishing/editing/creation ############################
@@ -191,7 +199,7 @@ def publish_post(*, tags, title, author_nm, slug, text):
         author_nm=author_nm,
         slug=slug,
         text=text,
-        posted_date=pd.datetime.utcnow(),
+        posted_date=datetime.utcnow(),
         tags=tags,
     )
     db.session.add(post)
@@ -207,7 +215,7 @@ def update_post(*, post_id, tags, title, author_nm, slug, text):
     post.author_nm = author_nm
     post.slug = slug
     post.text = text
-    post.update_date = pd.datetime.utcnow()
+    post.update_date = datetime.utcnow()
     db.session.commit()
 
 
@@ -314,7 +322,7 @@ def preview_post():
             author_nm=session["username"],
             slug=request.form["post-slug"],
             text=request.form["post-text"],
-            posted_date=pd.datetime.utcnow(),
+            posted_date=datetime.utcnow(),
             tags=tags,
         )
         # Pickle it and store the file name in the session
