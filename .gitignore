@@ -11,3 +11,4 @@ crap
 ssh_tunnel.sh
 application/temp_posts/*.pickle
 database
+database_dev

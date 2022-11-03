@@ -180,6 +180,14 @@ def login():
             return redirect(next_url)
 
 
+@app.route("/blog/logout")
+def logout():
+    session.pop("logged_in", None)
+    session.pop("roles", None)
+    session.pop("username", None)
+    return render_template(template_name_or_list="logout.html")
+
+
 ########################## Post publishing/editing/creation ############################
 
 

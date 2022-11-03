@@ -1,16 +1,16 @@
 services:
   app:
-    image: flask-website:latest
-    container_name: flask-website
+    image: flask-website:dev
+    container_name: flask-website-dev
     build:
       dockerfile: Dockerfile
       context: .
     env_file:
-      - .prod.env
+      - .dev.env
     networks:
-      - website-app
+      - website-app-dev
     ports:
-      - "4000:4000"
+      - "4001:4000"
     volumes:
       - ./application/static/media:/app/application/static/media:ro
     depends_on:
@@ -18,17 +18,17 @@ services:
   
   db:
     image: mysql/mysql-server:5.7
-    container_name: mysql-server
+    container_name: mysql-server-dev
     volumes:
-      - ./database/mysql:/var/lib/mysql
-      - ./database/my.cnf:/etc/my.cnf
+      - ./database_dev/mysql:/var/lib/mysql
+      - ./database_dev/my.cnf:/etc/my.cnf
     env_file:
-      - .prod.env
+      - .dev.env
     networks:
-      - website-app
+      - website-app-dev
     ports:
-      - "3306:3306"
+      - "3307:3306"
 
 
 networks:
-  website-app:
+  website-app-dev:

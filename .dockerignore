@@ -3,4 +3,5 @@
 *.env
 application/static/media
 database
+database_dev
 __pycache__

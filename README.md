@@ -10,6 +10,11 @@ I'm using some javascript plugin called Chosen for multiselect dropdowns:
 wget https://github.com/harvesthq/chosen/releases/download/v1.8.7/chosen_v1.8.7.zip
 ```
 
+## mysql-server
+The blog utilizes mysql to store posts, tags, comments, etc.
+The application uses a mysql docker image with a mounted volume that is spun up on app start.
+See [this information](https://dev.mysql.com/doc/refman/8.0/en/docker-mysql-more-topics.html) about how to set up and use mysql with docker.
+
 ## Notes
 * currently using `python` version `3.6.0`
 * currently using `mysql` version `5.7.34`
