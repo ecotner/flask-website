@@ -4,7 +4,8 @@ p {
 }
 
 img[alt=blog-img] {
-    /* max-height: 250px; */
+    max-height: 70vh;
+    max-width: 70vw;
     display: block;
     margin: 0 auto;
 }
