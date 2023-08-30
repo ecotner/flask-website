@@ -18,7 +18,7 @@ def create_app(config: BaseConfig):
     # Initialize the app
     app = Flask(__name__)
     app.jinja_env.globals.update(zip=zip, len=len, bool=bool)
-    Misaka(app=app, math_explicit=True, math=True, highlight=False, fenced_code=True)
+    Misaka(app=app, math_explicit=True, math=True, highlight=False, fenced_code=True, tables=True)
 
     # Add configuration
     app.config.from_object(config)
