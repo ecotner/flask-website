@@ -23,7 +23,7 @@ This involves a good deal of machine learning to predict match affinities, which
 We also work on some interesting optimization methods, which span integer linear programming problems to Markov decision processes.
 
 <h2 id="routing-microservices">Routing optimization on demand</h2>
-After gaining some familiarity with vehicle routing optimization from my work at ATD, I decided to build my own hobby [route optimization service](http://route-optimizer.ml) using the skills I had learned.
+After gaining some familiarity with vehicle routing optimization from my work at ATD, I decided to build my own hobby [route optimization service](https://route-optimizer.ecotner.com) using the skills I had learned.
 It is composed of three microservices:
 
 1. The [Valhalla](https://github.com/valhalla/valhalla) routing engine for measuring driving distances/times
@@ -31,7 +31,7 @@ It is composed of three microservices:
 3. A frontend web application for allowing a user to manage their own vehicle routes using a simple point and click interface (using [TypeScript](https://www.typescriptlang.org/), FastAPI, [leaflet.js](https://leafletjs.com/) and the [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API))
 
 All services are hosted on GCP, with the latter two using a serverless architecture (Cloud Run) deployed simply by pushing Docker images to the cloud.
-The architecture was particularly chosen so that the whole thing could scale according to load, and will run entierly for free with moderate use (using GCP's free tier and [freenom's](https://www.freenom.com/en/index.html?lang=en) domain services), which I am especially proud of!
+The architecture was particularly chosen so that the whole thing could scale according to load, and will run entierly for free with moderate use (using GCP's free tier of cloud compute), which I am especially proud of!
 My code is in a private repo for now because I am considering making this into a business, but I may open source it later.
 
 <h2 id="predictive-routing">Predictive routing and scheduling deliveries</h2>
