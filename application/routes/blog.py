@@ -151,7 +151,6 @@ def auth_required(roles: Union[str, set, list, tuple]):
 
 @app.route("/blog/login", methods=["GET", "POST"])
 def login():
-    # session["logged_in"] = "False"
     next_url = request.args.get("next_url")
     if request.method == "GET":
         # Render login page

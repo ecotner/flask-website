@@ -1,7 +1,8 @@
 .venv
-.docker-compose.yaml
+docker-compose.yaml
 *.env
 application/static/media
 database
 database_dev
 __pycache__
+.git

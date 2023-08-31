@@ -3,6 +3,7 @@ import os
 
 from flask import Flask
 from flask_misaka import Misaka
+from werkzeug.middleware.proxy_fix import ProxyFix
 
 from application.config import BaseConfig
 
@@ -17,6 +18,7 @@ else:
 def create_app(config: BaseConfig):
     # Initialize the app
     app = Flask(__name__)
+    app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1)  # adds proxy middleware so that we can return proper protocol from X-Forwarded-Proto header
     app.jinja_env.globals.update(zip=zip, len=len, bool=bool)
     Misaka(app=app, math_explicit=True, math=True, highlight=False, fenced_code=True, tables=True)
 
