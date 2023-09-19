@@ -55,7 +55,7 @@ I have been an invited speaker at several conferences to share my work with the 
 Due to the theoretical nature of my studies, a lot of my work is computational in nature. You can find the code for some of the simulations I've run in [this GitHub repo](https://github.com/ecotner/physics-research). Warning: it's messy (wrote most of it before I learned proper coding discipline). Below are some simulations of gravitationally-interacting condensates I produced as part of a research project on the [scattering properties of boson stars](https://arxiv.org/abs/1608.00547):
 
 <center>
-<blockquote class="imgur-embed-pub" lang="en" data-id="a/WLmAJjZ"><a href="//imgur.com/a/WLmAJjZ"></a></blockquote><script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script>
+<blockquote class="imgur-embed-pub" lang="en" data-id="a/Bs7IZxV"  ><a href="//imgur.com/a/Bs7IZxV">Collisions of self-interacting boson stars</a></blockquote><script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script>
 </center>
 
 # Education and volunteer work
